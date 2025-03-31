@@ -10,6 +10,7 @@ import Shop from "@/pages/Shop";
 import Artists from "@/pages/Artists";
 import Profile from "@/pages/Profile";
 import ArtistLogin from "@/pages/ArtistLogin";
+import ArtistProfile from "@/pages/ArtistProfile";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/artists" component={Artists} />
       <Route path="/artist-login" component={ArtistLogin} />
       <Route path="/profile" component={Profile} />
+      <Route path="/artist-profile" component={ArtistProfile} />
       <Route component={NotFound} />
     </Switch>
   );

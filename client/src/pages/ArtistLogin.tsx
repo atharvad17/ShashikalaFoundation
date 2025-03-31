@@ -47,8 +47,8 @@ const ArtistLogin = () => {
       description: "You have been logged in.",
     });
 
-    // Redirect to artist dashboard or profile page
-    setLocation('/profile');
+    // Redirect to artist profile page
+    setLocation('/artist-profile');
   };
 
   const handleSignup = (e: React.FormEvent) => {
@@ -78,8 +78,8 @@ const ArtistLogin = () => {
       description: "Your account has been created.",
     });
 
-    // Redirect to artist dashboard or profile page
-    setLocation('/profile');
+    // Redirect to artist profile page
+    setLocation('/artist-profile');
   };
 
   const handleForgotPassword = (e: React.FormEvent) => {
