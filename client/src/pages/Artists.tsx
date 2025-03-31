@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User } from 'lucide-react';
+import { User, Palette } from 'lucide-react';
+import { Link } from 'wouter';
 
 interface Artist {
   id: number;
@@ -88,6 +89,22 @@ const Artists = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+        
+        {/* Artist Login Call-to-Action */}
+        <div className="mt-16 bg-[#9DD3DD] bg-opacity-10 p-8 rounded-lg">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-4">Are You an Artist?</h2>
+            <p className="text-lg text-gray-700 mb-6">
+              Join our community of talented artists. Showcase your work, connect with art enthusiasts, and access exclusive opportunities.
+            </p>
+            <Link href="/artist-login">
+              <Button className="bg-[#9DD3DD] hover:bg-opacity-90 text-white px-6 py-3 font-medium">
+                <Palette className="mr-2 h-5 w-5" />
+                Join Our Artist Platform
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
