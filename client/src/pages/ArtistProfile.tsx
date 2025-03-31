@@ -636,7 +636,337 @@ const ArtistProfile = () => {
           </div>
         )}
         
-        {activeTab !== 'my-art' && (
+        {/* Events Tab */}
+        {activeTab === 'events' && (
+          <div>
+            <h1 className="text-2xl font-bold text-center text-[#4A90E2] mb-8">Events</h1>
+            
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-lg font-semibold">View your Events</h2>
+                
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-[#007BFF] hover:bg-[#0069D9] text-white">
+                      Create New Event
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[500px]">
+                    <DialogHeader>
+                      <DialogTitle>Create New Event</DialogTitle>
+                      <DialogDescription>
+                        Fill in the details to create a new event
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="event-title">Event Title</Label>
+                        <Input id="event-title" placeholder="Art Exhibition" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="event-date">Date</Label>
+                        <Input id="event-date" type="date" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="event-location">Location</Label>
+                        <Input id="event-location" placeholder="Gallery A" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="event-time">Time</Label>
+                        <Input id="event-time" type="time" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="event-price">Price ($)</Label>
+                        <Input id="event-price" type="number" min="0" step="0.01" placeholder="10.00" />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="event-description">Description</Label>
+                        <Textarea id="event-description" placeholder="Describe your event..." />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit" className="bg-[#007BFF] hover:bg-[#0069D9] text-white">
+                        Create Event
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </div>
+              
+              <div className="mb-8">
+                <h3 className="text-center font-semibold text-lg mb-4">Upcoming Events</h3>
+                
+                <div className="mb-4">
+                  <div className="border rounded-lg p-6 bg-white shadow-sm">
+                    <h4 className="text-xl font-semibold text-center mb-4">Art Exhibition</h4>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="font-medium text-right">Date:</div>
+                      <div>2024-12-20</div>
+                      
+                      <div className="font-medium text-right">Location:</div>
+                      <div>Gallery A</div>
+                      
+                      <div className="font-medium text-right">Time:</div>
+                      <div>18:00</div>
+                      
+                      <div className="font-medium text-right">Price:</div>
+                      <div>$10.00</div>
+                    </div>
+                    
+                    <div className="flex justify-end mt-4">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" size="icon" className="h-9 w-9 rounded-full">
+                            <Pencil className="h-4 w-4 text-blue-500" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[500px]">
+                          <DialogHeader>
+                            <DialogTitle>Edit Event</DialogTitle>
+                            <DialogDescription>
+                              Update the details of your event
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="grid gap-4 py-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-event-title">Event Title</Label>
+                              <Input id="edit-event-title" defaultValue="Art Exhibition" />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-event-date">Date</Label>
+                              <Input id="edit-event-date" type="date" defaultValue="2024-12-20" />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-event-location">Location</Label>
+                              <Input id="edit-event-location" defaultValue="Gallery A" />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-event-time">Time</Label>
+                              <Input id="edit-event-time" type="time" defaultValue="18:00" />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-event-price">Price ($)</Label>
+                              <Input id="edit-event-price" type="number" min="0" step="0.01" defaultValue="10.00" />
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-event-description">Description</Label>
+                              <Textarea id="edit-event-description" defaultValue="Art exhibition featuring various artists." />
+                            </div>
+                          </div>
+                          <DialogFooter>
+                            <Button type="submit" className="bg-[#007BFF] hover:bg-[#0069D9] text-white">
+                              Save Changes
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-center font-semibold text-lg mb-4">Past Events</h3>
+                
+                <div className="mb-4">
+                  <div className="border rounded-lg p-6 bg-white shadow-sm">
+                    <h4 className="text-xl font-semibold text-center mb-4">Music Concert</h4>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="font-medium text-right">Date:</div>
+                      <div>2024-11-01</div>
+                      
+                      <div className="font-medium text-right">Location:</div>
+                      <div>Concert Hall</div>
+                      
+                      <div className="font-medium text-right">Time:</div>
+                      <div>20:00</div>
+                      
+                      <div className="font-medium text-right">Price:</div>
+                      <div>$25.00</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* About Me Tab */}
+        {activeTab === 'about-me' && (
+          <div>
+            <h1 className="text-2xl font-bold text-center text-[#4A90E2] mb-8">About Me</h1>
+            
+            <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl mx-auto">
+              <div className="flex flex-col items-center mb-6">
+                <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
+                  <img 
+                    src="https://images.unsplash.com/photo-1508341591423-4347099e1f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80" 
+                    alt="Profile" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="bio">Bio</Label>
+                  <Textarea 
+                    id="bio" 
+                    placeholder="Tell us about yourself..."
+                    className="min-h-[120px]"
+                    defaultValue="I am a contemporary artist specializing in abstract paintings and mixed media. My work explores themes of nature and urban landscapes."
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="instagram">Instagram</Label>
+                  <Input 
+                    id="instagram" 
+                    placeholder="Enter Instagram handle..."
+                    defaultValue="@artistname"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="facebook">Facebook</Label>
+                  <Input 
+                    id="facebook" 
+                    placeholder="Enter Facebook profile..."
+                    defaultValue="facebook.com/artistname"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="linkedin">LinkedIn</Label>
+                  <Input 
+                    id="linkedin" 
+                    placeholder="Enter LinkedIn profile..."
+                    defaultValue="linkedin.com/in/artistname"
+                  />
+                </div>
+                
+                <div className="flex justify-center">
+                  <Button className="bg-[#007BFF] hover:bg-[#0069D9] text-white w-32">
+                    Save
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Profile Management Tab */}
+        {activeTab === 'profile-management' && (
+          <div>
+            <h1 className="text-2xl font-bold text-center text-[#4A90E2] mb-8">Profile Management</h1>
+            
+            <div className="bg-white rounded-lg shadow-sm p-6 max-w-2xl mx-auto">
+              <form className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="profile-photo">Profile Photo</Label>
+                  <div className="flex items-center gap-4">
+                    <div className="w-24 h-24 rounded-full overflow-hidden">
+                      <img 
+                        src="https://images.unsplash.com/photo-1508341591423-4347099e1f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80" 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <Input id="profile-photo" type="file" />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="display-name">Display Name</Label>
+                  <Input 
+                    id="display-name" 
+                    placeholder="John Doe"
+                    defaultValue="John Doe"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="address">Address Line</Label>
+                  <Input 
+                    id="address" 
+                    placeholder="123 Artist Street"
+                    defaultValue="123 Artist Street"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="subscription">Current Subscription</Label>
+                  <Input 
+                    id="subscription" 
+                    placeholder="Premium"
+                    defaultValue="Premium"
+                    disabled
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="public-link">Personal Public Link</Label>
+                  <Input 
+                    id="public-link" 
+                    placeholder="www.shashikala-foundation.com/john-doe"
+                    defaultValue="www.shashikala-foundation.com/john-doe"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input 
+                    id="email" 
+                    type="email"
+                    placeholder="abc@gmail.com"
+                    defaultValue="abc@gmail.com"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="contact">Contact Info</Label>
+                  <Input 
+                    id="contact" 
+                    placeholder="1234567890"
+                    defaultValue="1234567890"
+                  />
+                </div>
+                
+                <div className="text-center mt-4">
+                  <Button 
+                    type="button" 
+                    variant="link" 
+                    className="text-[#007BFF] hover:text-[#0069D9] mb-4"
+                  >
+                    Change Password
+                  </Button>
+                  
+                  <div className="flex justify-center">
+                    <Button type="submit" className="bg-[#F5A962] hover:bg-[#F59742] text-white w-32">
+                      Save
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+        
+        {/* Display placeholder for any other tabs */}
+        {activeTab !== 'my-art' && 
+         activeTab !== 'events' && 
+         activeTab !== 'about-me' && 
+         activeTab !== 'profile-management' && (
           <div className="flex items-center justify-center h-[80vh] text-gray-500">
             <p className="text-xl">{tabs.find(tab => tab.id === activeTab)?.label} content will be implemented later</p>
           </div>
