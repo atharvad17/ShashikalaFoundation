@@ -17,6 +17,7 @@ export interface Event {
   time: string;
   location: string;
   image?: string;
+  price: number; // Price in USD, 0 for free events
 }
 
 export interface Product {
@@ -67,7 +68,8 @@ export const events: Event[] = [
       month: 'Aug'
     },
     time: '10:00 AM - 4:00 PM',
-    location: 'Central Park, Main Plaza'
+    location: 'Central Park, Main Plaza',
+    price: 0 // Free event
   },
   {
     id: 2,
@@ -78,7 +80,8 @@ export const events: Event[] = [
       month: 'Aug'
     },
     time: '2:00 PM - 5:00 PM',
-    location: 'Art Studio, 123 Main St'
+    location: 'Art Studio, 123 Main St',
+    price: 25 // $25 per person
   },
   {
     id: 3,
@@ -89,7 +92,8 @@ export const events: Event[] = [
       month: 'Aug'
     },
     time: '6:30 PM - 8:00 PM',
-    location: 'Community Gallery'
+    location: 'Community Gallery',
+    price: 10 // $10 per person
   }
 ];
 
