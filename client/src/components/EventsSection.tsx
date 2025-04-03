@@ -17,6 +17,7 @@ interface Event {
   };
   time: string;
   location: string;
+  price: number; // Price in USD, 0 for free events
 }
 
 const EventsSection = () => {
@@ -32,7 +33,8 @@ const EventsSection = () => {
         month: 'Aug'
       },
       time: '10:00 AM - 4:00 PM',
-      location: 'Central Park, Main Plaza'
+      location: 'Central Park, Main Plaza',
+      price: 0 // Free event
     },
     {
       id: 2,
@@ -43,7 +45,8 @@ const EventsSection = () => {
         month: 'Aug'
       },
       time: '2:00 PM - 5:00 PM',
-      location: 'Art Studio, 123 Main St'
+      location: 'Art Studio, 123 Main St',
+      price: 25 // $25 per person
     },
     {
       id: 3,
@@ -54,7 +57,8 @@ const EventsSection = () => {
         month: 'Aug'
       },
       time: '6:30 PM - 8:00 PM',
-      location: 'Community Gallery'
+      location: 'Community Gallery',
+      price: 10 // $10 per person
     }
   ];
 
@@ -82,8 +86,17 @@ const EventsSection = () => {
                     <span className="text-lg font-bold">{event.date.day}</span>
                     <span className="text-xs uppercase">{event.date.month}</span>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">{event.title}</h3>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start">
+                      <h3 className="text-xl font-semibold">{event.title}</h3>
+                      <div className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                        event.price === 0 
+                          ? "bg-green-100 text-green-800" 
+                          : "bg-orange-100 text-orange-800"
+                      }`}>
+                        {event.price === 0 ? "Free" : `$${event.price}`}
+                      </div>
+                    </div>
                     <p className="text-gray-600">{event.time}</p>
                   </div>
                 </div>
@@ -100,14 +113,20 @@ const EventsSection = () => {
                         className="text-[#9DD3DD] font-medium"
                         onClick={() => handleRSVP(event)}
                       >
-                        RSVP
+                        {event.price === 0 ? "RSVP Now" : "Register"}
                       </Button>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
-                        <DialogTitle>RSVP to {rsvpEvent?.title}</DialogTitle>
+                        <DialogTitle>
+                          {event.price === 0 
+                            ? `RSVP to ${rsvpEvent?.title}` 
+                            : `Register for ${rsvpEvent?.title}`}
+                        </DialogTitle>
                         <DialogDescription>
-                          Fill out this form to reserve your spot at this event.
+                          {event.price === 0 
+                            ? "Fill out this form to reserve your spot at this event." 
+                            : `Complete registration to attend this event. Registration fee: $${rsvpEvent?.price} per person.`}
                         </DialogDescription>
                       </DialogHeader>
                       <div className="grid gap-4 py-4">
@@ -127,12 +146,34 @@ const EventsSection = () => {
                           <Label htmlFor="attendees" className="text-right">
                             Attendees
                           </Label>
-                          <Input id="attendees" type="number" min="1" className="col-span-3" defaultValue="1" />
+                          <Input 
+                            id="attendees" 
+                            type="number" 
+                            min="1" 
+                            className="col-span-3" 
+                            defaultValue="1" 
+                          />
                         </div>
+                        {rsvpEvent?.price !== 0 && (
+                          <div className="grid grid-cols-1 mt-2">
+                            <div className="p-3 bg-gray-100 rounded-md">
+                              <div className="flex justify-between text-sm mb-1">
+                                <span>Price per attendee:</span>
+                                <span>${rsvpEvent?.price}.00</span>
+                              </div>
+                              <div className="border-t border-gray-300 pt-1 mt-1">
+                                <div className="flex justify-between font-medium">
+                                  <span>Total:</span>
+                                  <span>Calculated at checkout</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                       <DialogFooter>
                         <Button type="submit">
-                          Confirm RSVP
+                          {event.price === 0 ? "Confirm RSVP" : "Proceed to Payment"}
                         </Button>
                       </DialogFooter>
                     </DialogContent>
