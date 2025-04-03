@@ -11,6 +11,10 @@ import Artists from "@/pages/Artists";
 import Profile from "@/pages/Profile";
 import ArtistLogin from "@/pages/ArtistLogin";
 import ArtistProfile from "@/pages/ArtistProfile";
+import Donate from "@/pages/Donate";
+import Checkout from "@/pages/Checkout";
+import EventRegistration from "@/pages/EventRegistration";
+import PaymentSuccess from "@/pages/PaymentSuccess";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
@@ -25,6 +29,10 @@ function Router() {
       <Route path="/artist-login" component={ArtistLogin} />
       <Route path="/profile" component={Profile} />
       <Route path="/artist-profile" component={ArtistProfile} />
+      <Route path="/donate" component={Donate} />
+      <Route path="/checkout" component={Checkout} />
+      <Route path="/event-registration/:id" component={EventRegistration} />
+      <Route path="/payment-success" component={PaymentSuccess} />
       <Route component={NotFound} />
     </Switch>
   );
