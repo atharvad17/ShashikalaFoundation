@@ -17,6 +17,8 @@ import EventRegistration from "@/pages/EventRegistration";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import { CartProvider } from "@/contexts/CartContext";
+import { Cart } from "@/components/Cart";
 
 function Router() {
   return (
@@ -41,14 +43,17 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col min-h-screen">
-        <NavBar />
-        <main className="flex-grow">
-          <Router />
-        </main>
-        <Footer />
-      </div>
-      <Toaster />
+      <CartProvider>
+        <div className="flex flex-col min-h-screen">
+          <NavBar />
+          <main className="flex-grow">
+            <Router />
+          </main>
+          <Footer />
+          <Cart />
+        </div>
+        <Toaster />
+      </CartProvider>
     </QueryClientProvider>
   );
 }

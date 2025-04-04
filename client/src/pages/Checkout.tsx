@@ -7,15 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-
-// Mock cart data - in a real app, this would come from a cart state manager or context
-// This is just for demonstration purposes
-const mockCartItems = [
-  { id: 1, title: 'Original Artwork', price: 199, quantity: 1 },
-  { id: 2, title: 'Art Print', price: 45, quantity: 2 },
-];
-
-const mockCartTotal = mockCartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+import { useCart } from '@/contexts/CartContext';
 
 export default function Checkout() {
   const [email, setEmail] = useState<string>('');
@@ -31,9 +23,15 @@ export default function Checkout() {
   const [_, navigate] = useLocation();
   const { toast } = useToast();
 
-  // In a real app, you would fetch cart items and calculate total here
-  const cartItems = mockCartItems;
-  const cartTotal = mockCartTotal;
+  // Get cart data from CartContext
+  const { cartItems, cartTotal, clearCart } = useCart();
+  
+  // Redirect to home if cart is empty
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate('/');
+    }
+  }, [cartItems, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,11 +72,14 @@ export default function Checkout() {
   };
   
   const handleSuccess = () => {
+    // Clear shopping cart
+    clearCart();
+    
     toast({
       title: "Order Complete!",
       description: "Your order has been successfully processed.",
     });
-    navigate('/order-confirmation');
+    navigate('/payment-success');
   };
 
   return (
