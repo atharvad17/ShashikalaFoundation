@@ -25,8 +25,16 @@ const EventsSection = () => {
   const [rsvpEvent, setRsvpEvent] = useState<Event | null>(null);
   const [, navigate] = useLocation();
   const { toast } = useToast();
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [middleName, setMiddleName] = useState("");
   const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressLine2, setAddressLine2] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipcode, setZipcode] = useState("");
   const [attendees, setAttendees] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   
@@ -71,8 +79,16 @@ const EventsSection = () => {
 
   const handleRSVP = (event: Event) => {
     setRsvpEvent(event);
-    setName("");
+    setFirstName("");
+    setLastName("");
+    setMiddleName("");
     setEmail("");
+    setContact("");
+    setAddress("");
+    setAddressLine2("");
+    setCity("");
+    setState("");
+    setZipcode("");
     setAttendees(1);
     setIsOpen(true);
   };
@@ -82,7 +98,7 @@ const EventsSection = () => {
     
     if (!rsvpEvent) return;
     
-    if (!name || !email || !email.includes('@') || attendees < 1) {
+    if (!firstName || !lastName || !email || !email.includes('@') || !contact || !address || !city || !state || !zipcode) {
       toast({
         title: "Missing Information",
         description: "Please fill out all required fields correctly.",
@@ -173,16 +189,42 @@ const EventsSection = () => {
                       </DialogHeader>
                       <form onSubmit={handleSubmit}>
                         <div className="grid gap-4 py-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="first-name" className="text-sm font-medium">
+                                First Name<span className="text-red-500">*</span>
+                              </Label>
+                              <Input 
+                                id="first-name" 
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                placeholder="First Name" 
+                                required
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="last-name" className="text-sm font-medium">
+                                Last Name<span className="text-red-500">*</span>
+                              </Label>
+                              <Input 
+                                id="last-name" 
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                placeholder="Last Name" 
+                                required
+                              />
+                            </div>
+                          </div>
+                          
                           <div className="space-y-2">
-                            <Label htmlFor="name" className="text-sm font-medium">
-                              Full Name<span className="text-red-500">*</span>
+                            <Label htmlFor="middle-name" className="text-sm font-medium">
+                              Middle Name (optional)
                             </Label>
                             <Input 
-                              id="name" 
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                              placeholder="Your Name" 
-                              required
+                              id="middle-name" 
+                              value={middleName}
+                              onChange={(e) => setMiddleName(e.target.value)}
+                              placeholder="Middle Name" 
                             />
                           </div>
                           
@@ -198,6 +240,83 @@ const EventsSection = () => {
                               placeholder="your.email@example.com" 
                               required
                             />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label htmlFor="contact" className="text-sm font-medium">
+                              Contact<span className="text-red-500">*</span>
+                            </Label>
+                            <Input 
+                              id="contact"
+                              value={contact}
+                              onChange={(e) => setContact(e.target.value)}
+                              placeholder="+1 (000)-000-0000" 
+                              required
+                            />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label htmlFor="address" className="text-sm font-medium">
+                              Address<span className="text-red-500">*</span>
+                            </Label>
+                            <Input 
+                              id="address" 
+                              value={address}
+                              onChange={(e) => setAddress(e.target.value)}
+                              placeholder="Primary Address" 
+                              required
+                            />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label htmlFor="address-line2" className="text-sm font-medium">
+                              Apt/ Unit/ Suite
+                            </Label>
+                            <Input 
+                              id="address-line2" 
+                              value={addressLine2}
+                              onChange={(e) => setAddressLine2(e.target.value)}
+                              placeholder="Apt/ Unit/ Suite" 
+                            />
+                          </div>
+                          
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="city" className="text-sm font-medium">
+                                City<span className="text-red-500">*</span>
+                              </Label>
+                              <Input 
+                                id="city" 
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                placeholder="City" 
+                                required
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="state" className="text-sm font-medium">
+                                State<span className="text-red-500">*</span>
+                              </Label>
+                              <Input 
+                                id="state" 
+                                value={state}
+                                onChange={(e) => setState(e.target.value)}
+                                placeholder="State" 
+                                required
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="zipcode" className="text-sm font-medium">
+                                Zipcode<span className="text-red-500">*</span>
+                              </Label>
+                              <Input 
+                                id="zipcode" 
+                                value={zipcode}
+                                onChange={(e) => setZipcode(e.target.value)}
+                                placeholder="Zipcode" 
+                                required
+                              />
+                            </div>
                           </div>
                           
                           <div className="space-y-2">
