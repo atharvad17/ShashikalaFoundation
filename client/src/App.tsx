@@ -18,7 +18,7 @@ import PaymentSuccess from "@/pages/PaymentSuccess";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/contexts/CartContext";
-import { Cart } from "@/components/Cart";
+import { Cart, CartIcon } from "@/components/Cart";
 
 function Router() {
   return (
@@ -50,6 +50,7 @@ function App() {
             <Router />
           </main>
           <Footer />
+          <CartIcon />
           <Cart />
         </div>
         <Toaster />

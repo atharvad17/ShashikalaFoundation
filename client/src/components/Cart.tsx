@@ -7,10 +7,11 @@ export function CartIcon() {
   const { isCartOpen, setIsCartOpen, itemCount } = useCart();
   
   return (
-    <div className="relative cursor-pointer" onClick={() => setIsCartOpen(!isCartOpen)}>
-      <ShoppingBag className="h-6 w-6 text-white hover:text-[#9DD3DD] transition-colors duration-300" />
+    <div className="fixed bottom-6 right-6 z-50 bg-[#9DD3DD] hover:bg-[#87CEEB] p-3 rounded-full shadow-lg cursor-pointer transition-all duration-300 transform hover:scale-110" 
+         onClick={() => setIsCartOpen(!isCartOpen)}>
+      <ShoppingBag className="h-6 w-6 text-white" />
       {itemCount > 0 && (
-        <div className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-[#FFA07A] text-white flex items-center justify-center text-xs font-semibold">
+        <div className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-red-500 text-white flex items-center justify-center text-xs font-bold">
           {itemCount}
         </div>
       )}
