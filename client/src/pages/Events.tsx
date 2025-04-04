@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { useLocation } from 'wouter';
+import { useToast } from '@/hooks/use-toast';
 
 interface Event {
   id: number;
@@ -23,6 +25,13 @@ interface Event {
 
 const Events = () => {
   const [rsvpEvent, setRsvpEvent] = useState<Event | null>(null);
+  const [, navigate] = useLocation();
+  const { toast } = useToast();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [attendees, setAttendees] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
   
   const events: Event[] = [
     {
@@ -107,6 +116,39 @@ const Events = () => {
 
   const handleRSVP = (event: Event) => {
     setRsvpEvent(event);
+    setName("");
+    setEmail("");
+    setContact("");
+    setAttendees(1);
+    setIsOpen(true);
+  };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!rsvpEvent) return;
+    
+    if (!name || !email || !email.includes('@') || !contact) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill out all required fields correctly.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // For free events, just confirm RSVP
+    if (rsvpEvent.price === 0) {
+      toast({
+        title: "RSVP Confirmed",
+        description: `You've successfully RSVP'd to ${rsvpEvent.title}.`
+      });
+      setIsOpen(false);
+    } else {
+      // For paid events, redirect to the payment page with event details
+      navigate(`/event-registration?id=${rsvpEvent.id}`);
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -152,7 +194,7 @@ const Events = () => {
                     <MapPin className="mr-2 h-4 w-4 text-[#9DD3DD]" />
                     <span>{event.location}</span>
                   </span>
-                  <Dialog>
+                  <Dialog open={isOpen && rsvpEvent?.id === event.id} onOpenChange={setIsOpen}>
                     <DialogTrigger asChild>
                       <Button 
                         className={`${event.price === 0 ? "bg-[#9DD3DD]" : "bg-[#F5A962]"} hover:bg-opacity-90 text-white`}
@@ -161,99 +203,102 @@ const Events = () => {
                         {event.price === 0 ? "RSVP Now" : "Register"}
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[600px]">
+                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                       <DialogHeader>
                         <DialogTitle className="text-2xl">{rsvpEvent?.title}</DialogTitle>
                         <DialogDescription className="text-base">
                           Date: {rsvpEvent?.date.month} {rsvpEvent?.date.day}, 2024 | Time: {rsvpEvent?.time} | Location: {rsvpEvent?.location}
+                          <br />
+                          {rsvpEvent?.price === 0 
+                            ? "Fill out this form to reserve your spot at this event." 
+                            : `Registration fee: $${rsvpEvent?.price} per person.`}
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="grid gap-6 py-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <form onSubmit={handleSubmit}>
+                        <div className="grid gap-4 py-4">
                           <div className="space-y-2">
-                            <Label htmlFor="first-name" className="text-sm font-medium">
-                              First Name<span className="text-red-500">*</span>
+                            <Label htmlFor="name" className="text-sm font-medium">
+                              Full Name<span className="text-red-500">*</span>
                             </Label>
-                            <Input id="first-name" placeholder="First Name" />
+                            <Input 
+                              id="name" 
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder="Your Name" 
+                              required
+                            />
                           </div>
+                          
                           <div className="space-y-2">
-                            <Label htmlFor="last-name" className="text-sm font-medium">
-                              Last Name<span className="text-red-500">*</span>
+                            <Label htmlFor="email" className="text-sm font-medium">
+                              Email<span className="text-red-500">*</span>
                             </Label>
-                            <Input id="last-name" placeholder="Last Name" />
+                            <Input 
+                              id="email" 
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="your.email@example.com" 
+                              required
+                            />
                           </div>
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="middle-name" className="text-sm font-medium">
-                            Middle Name (optional)
-                          </Label>
-                          <Input id="middle-name" placeholder="Middle Name" />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="email" className="text-sm font-medium">
-                            Email<span className="text-red-500">*</span>
-                          </Label>
-                          <Input id="email" type="email" placeholder="abc@gmail.com" />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="contact" className="text-sm font-medium">
-                            Contact<span className="text-red-500">*</span>
-                          </Label>
-                          <Input id="contact" placeholder="+1 (000)-000-0000" />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="address" className="text-sm font-medium">
-                            Address<span className="text-red-500">*</span>
-                          </Label>
-                          <Input id="address" placeholder="Primary Address" />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="address-line2" className="text-sm font-medium">
-                            Apt/ Unit/ Suite
-                          </Label>
-                          <Input id="address-line2" placeholder="Apt/ Unit/ Suite" />
-                        </div>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                          
                           <div className="space-y-2">
-                            <Label htmlFor="city" className="text-sm font-medium">
-                              City<span className="text-red-500">*</span>
+                            <Label htmlFor="contact" className="text-sm font-medium">
+                              Contact Number<span className="text-red-500">*</span>
                             </Label>
-                            <Input id="city" placeholder="City" />
+                            <Input 
+                              id="contact"
+                              value={contact}
+                              onChange={(e) => setContact(e.target.value)}
+                              placeholder="+1 (000)-000-0000" 
+                              required
+                            />
                           </div>
+                          
                           <div className="space-y-2">
-                            <Label htmlFor="state" className="text-sm font-medium">
-                              State<span className="text-red-500">*</span>
+                            <Label htmlFor="attendees" className="text-sm font-medium">
+                              Number of Attendees<span className="text-red-500">*</span>
                             </Label>
-                            <Input id="state" placeholder="State" />
+                            <Input 
+                              id="attendees" 
+                              type="number" 
+                              min="1" 
+                              value={attendees}
+                              onChange={(e) => setAttendees(parseInt(e.target.value) || 1)}
+                              required
+                            />
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="zipcode" className="text-sm font-medium">
-                              Zipcode<span className="text-red-500">*</span>
-                            </Label>
-                            <Input id="zipcode" placeholder="Zipcode" />
-                          </div>
+                          
+                          {rsvpEvent?.price !== 0 && (
+                            <div className="mt-4 p-4 bg-gray-50 rounded-md">
+                              <div className="flex justify-between text-sm mb-1">
+                                <span>Price per attendee:</span>
+                                <span>${rsvpEvent?.price}.00</span>
+                              </div>
+                              <div className="flex justify-between text-sm mb-1">
+                                <span>Number of attendees:</span>
+                                <span>{attendees}</span>
+                              </div>
+                              <div className="border-t border-gray-200 pt-2 mt-2">
+                                <div className="flex justify-between font-medium">
+                                  <span>Total:</span>
+                                  <span>${rsvpEvent ? rsvpEvent.price * attendees : 0}.00</span>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
-                        
-                        {rsvpEvent && rsvpEvent.price > 0 && (
-                          <div className="mt-2 text-center">
-                            <p className="font-medium">Registration Fee: ${rsvpEvent.price}</p>
-                          </div>
-                        )}
-                      </div>
-                      <DialogFooter>
-                        <Button 
-                          type="submit" 
-                          className={`w-full ${rsvpEvent?.price === 0 ? "bg-[#9DD3DD]" : "bg-[#F5A962]"} hover:bg-opacity-90`}
-                        >
-                          {rsvpEvent?.price === 0 ? "Confirm RSVP" : "Proceed to Payment"}
-                        </Button>
-                      </DialogFooter>
+                        <DialogFooter>
+                          <Button 
+                            type="submit"
+                            className={`w-full ${rsvpEvent?.price === 0 ? "bg-[#9DD3DD]" : "bg-[#F5A962]"} hover:bg-opacity-90 text-white text-lg py-6`}
+                            size="lg"
+                          >
+                            {rsvpEvent?.price === 0 ? "Confirm RSVP" : "Proceed to Payment"}
+                          </Button>
+                        </DialogFooter>
+                      </form>
                     </DialogContent>
                   </Dialog>
                 </div>

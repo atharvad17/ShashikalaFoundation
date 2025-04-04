@@ -10,8 +10,16 @@ import { useToast } from '@/hooks/use-toast';
 import { events } from '@/lib/data';
 
 export default function EventRegistration() {
+  // Check for URL query parameters
+  const [location] = useLocation();
+  const searchParams = new URLSearchParams(location.split('?')[1] || '');
+  const queryEventId = searchParams.get('id');
+  
+  // Also support route params for backward compatibility
   const [routeMatch, params] = useRoute('/event-registration/:id');
-  const eventId = params?.id ? parseInt(params.id) : null;
+  
+  // Determine event ID from either query param or route param
+  const eventId = queryEventId ? parseInt(queryEventId) : params?.id ? parseInt(params.id) : null;
   const event = events.find(e => e.id === eventId);
   
   const [name, setName] = useState<string>('');
@@ -191,7 +199,8 @@ export default function EventRegistration() {
           )}
           
           <Button 
-            className="w-full mt-6" 
+            className="w-full mt-8 text-lg py-6" 
+            size="lg"
             type="submit" 
             disabled={isLoading}
           >

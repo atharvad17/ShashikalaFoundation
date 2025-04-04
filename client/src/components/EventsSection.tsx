@@ -1,4 +1,4 @@
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
 interface Event {
   id: number;
@@ -22,6 +23,12 @@ interface Event {
 
 const EventsSection = () => {
   const [rsvpEvent, setRsvpEvent] = useState<Event | null>(null);
+  const [, navigate] = useLocation();
+  const { toast } = useToast();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [attendees, setAttendees] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
   
   const events: Event[] = [
     {
@@ -64,6 +71,38 @@ const EventsSection = () => {
 
   const handleRSVP = (event: Event) => {
     setRsvpEvent(event);
+    setName("");
+    setEmail("");
+    setAttendees(1);
+    setIsOpen(true);
+  };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!rsvpEvent) return;
+    
+    if (!name || !email || !email.includes('@') || attendees < 1) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill out all required fields correctly.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // For free events, just confirm RSVP
+    if (rsvpEvent.price === 0) {
+      toast({
+        title: "RSVP Confirmed",
+        description: `You've successfully RSVP'd to ${rsvpEvent.title}.`
+      });
+      setIsOpen(false);
+    } else {
+      // For paid events, redirect to the payment page with event details
+      navigate(`/event-registration?id=${rsvpEvent.id}`);
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -106,76 +145,104 @@ const EventsSection = () => {
                     <MapPin className="mr-2 h-4 w-4 text-[#9DD3DD]" />
                     <span>{event.location}</span>
                   </span>
-                  <Dialog>
+                  <Dialog open={isOpen && rsvpEvent?.id === event.id} onOpenChange={setIsOpen}>
                     <DialogTrigger asChild>
                       <Button 
-                        variant="ghost" 
-                        className="text-[#9DD3DD] font-medium"
+                        className={`${event.price === 0 ? "bg-[#9DD3DD]" : "bg-[#F5A962]"} hover:bg-opacity-90 text-white`}
                         onClick={() => handleRSVP(event)}
                       >
                         {event.price === 0 ? "RSVP Now" : "Register"}
                       </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
                       <DialogHeader>
                         <DialogTitle>
-                          {event.price === 0 
+                          {rsvpEvent?.price === 0 
                             ? `RSVP to ${rsvpEvent?.title}` 
                             : `Register for ${rsvpEvent?.title}`}
                         </DialogTitle>
                         <DialogDescription>
-                          {event.price === 0 
+                          Date: {rsvpEvent?.date.month} {rsvpEvent?.date.day}, 2024 | Time: {rsvpEvent?.time}
+                          <br />
+                          Location: {rsvpEvent?.location}
+                          <br />
+                          {rsvpEvent?.price === 0 
                             ? "Fill out this form to reserve your spot at this event." 
-                            : `Complete registration to attend this event. Registration fee: $${rsvpEvent?.price} per person.`}
+                            : `Registration fee: $${rsvpEvent?.price} per person.`}
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="name" className="text-right">
-                            Name
-                          </Label>
-                          <Input id="name" className="col-span-3" />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="email" className="text-right">
-                            Email
-                          </Label>
-                          <Input id="email" className="col-span-3" />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="attendees" className="text-right">
-                            Attendees
-                          </Label>
-                          <Input 
-                            id="attendees" 
-                            type="number" 
-                            min="1" 
-                            className="col-span-3" 
-                            defaultValue="1" 
-                          />
-                        </div>
-                        {rsvpEvent?.price !== 0 && (
-                          <div className="grid grid-cols-1 mt-2">
-                            <div className="p-3 bg-gray-100 rounded-md">
+                      <form onSubmit={handleSubmit}>
+                        <div className="grid gap-4 py-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="name" className="text-sm font-medium">
+                              Full Name<span className="text-red-500">*</span>
+                            </Label>
+                            <Input 
+                              id="name" 
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder="Your Name" 
+                              required
+                            />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label htmlFor="email" className="text-sm font-medium">
+                              Email<span className="text-red-500">*</span>
+                            </Label>
+                            <Input 
+                              id="email" 
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="your.email@example.com" 
+                              required
+                            />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Label htmlFor="attendees" className="text-sm font-medium">
+                              Number of Attendees<span className="text-red-500">*</span>
+                            </Label>
+                            <Input 
+                              id="attendees" 
+                              type="number" 
+                              min="1" 
+                              value={attendees}
+                              onChange={(e) => setAttendees(parseInt(e.target.value) || 1)}
+                              required
+                            />
+                          </div>
+                          
+                          {rsvpEvent?.price !== 0 && (
+                            <div className="mt-4 p-4 bg-gray-50 rounded-md">
                               <div className="flex justify-between text-sm mb-1">
                                 <span>Price per attendee:</span>
                                 <span>${rsvpEvent?.price}.00</span>
                               </div>
-                              <div className="border-t border-gray-300 pt-1 mt-1">
+                              <div className="flex justify-between text-sm mb-1">
+                                <span>Number of attendees:</span>
+                                <span>{attendees}</span>
+                              </div>
+                              <div className="border-t border-gray-200 pt-2 mt-2">
                                 <div className="flex justify-between font-medium">
                                   <span>Total:</span>
-                                  <span>Calculated at checkout</span>
+                                  <span>${rsvpEvent ? rsvpEvent.price * attendees : 0}.00</span>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                      <DialogFooter>
-                        <Button type="submit">
-                          {event.price === 0 ? "Confirm RSVP" : "Proceed to Payment"}
-                        </Button>
-                      </DialogFooter>
+                          )}
+                        </div>
+                        <DialogFooter>
+                          <Button 
+                            type="submit"
+                            className={`w-full ${rsvpEvent?.price === 0 ? "bg-[#9DD3DD]" : "bg-[#F5A962]"} hover:bg-opacity-90 text-white text-lg py-6`}
+                            size="lg"
+                          >
+                            {rsvpEvent?.price === 0 ? "Confirm RSVP" : "Proceed to Payment"}
+                          </Button>
+                        </DialogFooter>
+                      </form>
                     </DialogContent>
                   </Dialog>
                 </div>

@@ -1,23 +1,19 @@
-import { Link, useLocation } from 'wouter';
-import { Button } from '@/components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Heart } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Link, useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Heart } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const NavBar = () => {
   const [location] = useLocation();
   const isMobile = useIsMobile();
 
   const navItems = [
-    { href: '/shop', label: 'Shop' },
-    { href: '/events', label: 'Events' },
-    { href: '/about', label: 'About' },
-    { href: '/artists', label: 'Artists' },
-    { href: '/profile', label: 'Profile' },
+    { href: "/shop", label: "Shop" },
+    { href: "/events", label: "Events" },
+    { href: "/about", label: "About" },
+    { href: "/artists", label: "Artists" },
+    { href: "/profile", label: "Profile" },
   ];
 
   return (
@@ -27,29 +23,31 @@ const NavBar = () => {
           <div className="flex items-center">
             <Link href="/">
               <div className="flex items-center">
-                <img 
-                  src="/assets/logo.png" 
-                  alt="Shashikala Foundation Logo" 
+                <img
+                  src="/assets/logo.png"
+                  alt="Shashikala Foundation Logo"
                   className="h-16 w-auto"
                 />
               </div>
             </Link>
           </div>
-          
+
           {!isMobile && (
             <nav className="hidden md:flex space-x-8">
               {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>
-                  <div className={`text-white hover:text-[#9DD3DD] transition-colors duration-300 relative nav-link ${
-                    location === item.href ? "text-[#9DD3DD]" : ""
-                  }`}>
+                  <div
+                    className={`text-white hover:text-[#9DD3DD] transition-colors duration-300 relative nav-link ${
+                      location === item.href ? "text-[#9DD3DD]" : ""
+                    }`}
+                  >
                     {item.label}
                   </div>
                 </Link>
               ))}
             </nav>
           )}
-          
+
           <div className="flex items-center space-x-4">
             <Link href="/donate">
               <Button className="bg-[#FFA07A] hover:bg-[#FF8C66] text-white px-4 py-1.5 rounded-full flex items-center gap-1.5 font-medium">
@@ -58,7 +56,7 @@ const NavBar = () => {
               </Button>
             </Link>
           </div>
-          
+
           {isMobile && (
             <Sheet>
               <SheetTrigger asChild>
@@ -70,9 +68,11 @@ const NavBar = () => {
                 <nav className="flex flex-col space-y-4 mt-8">
                   {navItems.map((item) => (
                     <Link key={item.href} href={item.href}>
-                      <div className={`px-3 py-2 text-white hover:bg-gray-700 rounded-md ${
-                        location === item.href ? "bg-gray-700" : ""
-                      }`}>
+                      <div
+                        className={`px-3 py-2 text-white hover:bg-gray-700 rounded-md ${
+                          location === item.href ? "bg-gray-700" : ""
+                        }`}
+                      >
                         {item.label}
                       </div>
                     </Link>
