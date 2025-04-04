@@ -33,6 +33,7 @@ function Router() {
       <Route path="/artist-profile" component={ArtistProfile} />
       <Route path="/donate" component={Donate} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/event-registration" component={EventRegistration} />
       <Route path="/event-registration/:id" component={EventRegistration} />
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route component={NotFound} />
