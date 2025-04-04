@@ -85,11 +85,13 @@ export function CheckoutForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <PaymentElement />
+    <form onSubmit={handleSubmit} className="space-y-8 flex flex-col items-center">
+      <div className="w-full">
+        <PaymentElement />
+      </div>
       <Button 
         type="submit" 
-        className="w-full" 
+        className="w-full max-w-sm mx-auto" 
         disabled={!stripe || isLoading || externalLoading}
       >
         {isLoading || externalLoading ? 'Processing...' : submitButtonText}

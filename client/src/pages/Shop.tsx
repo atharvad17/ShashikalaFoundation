@@ -80,10 +80,14 @@ const Shop = () => {
   return (
     <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold mb-2 text-center">Shop</h1>
-        <p className="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">
-          Purchase original artwork and support our artists. A portion of all sales goes to our community programs.
-        </p>
+        <div className="flex items-center justify-between mb-12">
+          <div className="w-full">
+            <h1 className="text-4xl font-bold mb-2 text-center">Shop</h1>
+            <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto">
+              Purchase original artwork and support our artists. A portion of all sales goes to our community programs.
+            </p>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (

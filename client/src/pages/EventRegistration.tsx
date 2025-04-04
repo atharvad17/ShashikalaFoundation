@@ -78,9 +78,16 @@ export default function EventRegistration() {
           attendees,
           pricePerAttendee: event.price 
         });
+        
+        if (!response.ok) {
+          throw new Error('Failed to initialize payment');
+        }
+        
         const data = await response.json();
         
         if (data.clientSecret) {
+          // Scroll to top to ensure payment form is visible
+          window.scrollTo(0, 0);
           setClientSecret(data.clientSecret);
           setShowPaymentForm(true);
         } else {
