@@ -34,9 +34,9 @@ const NavBar = () => {
             <Link href="/">
               <div className="flex items-center">
                 <img 
-                  src="/assets/shashikala-logo.jpg" 
+                  src="/assets/shashikala-logo.png" 
                   alt="Shashikala Foundation Logo" 
-                  className="h-12 w-auto"
+                  className="h-16 w-auto"
                 />
               </div>
             </Link>
@@ -57,11 +57,9 @@ const NavBar = () => {
           )}
           
           <div className="flex items-center space-x-4">
-            {location === '/shop' && (
-              <div className="flex items-center mr-2">
-                <CartIcon />
-              </div>
-            )}
+            <div className="flex items-center mr-2">
+              <CartIcon />
+            </div>
             <Dialog open={donationOpen} onOpenChange={setDonationOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-[#FFA07A] hover:bg-[#FF8C66] text-white px-4 py-1.5 rounded-full flex items-center gap-1.5 font-medium">

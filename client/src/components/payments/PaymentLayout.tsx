@@ -31,7 +31,7 @@ export function PaymentLayout({
             {description}
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-6 max-h-[70vh] overflow-y-auto">
           {clientSecret ? (
             <Elements 
               stripe={stripePromise} 
