@@ -178,7 +178,8 @@ export default function Checkout() {
             </div>
             
             <Button 
-              className="w-full mt-6" 
+              className="w-full mt-8 text-lg py-6" 
+              size="lg"
               type="submit" 
               disabled={isLoading}
             >

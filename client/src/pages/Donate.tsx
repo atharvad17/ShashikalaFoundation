@@ -87,6 +87,12 @@ export default function Donate() {
     });
     navigate('/');
   };
+  
+  // Ensure donation amount is at least $1
+  const validateAmount = () => {
+    const amount = getDonationAmount();
+    return amount >= 1;
+  };
 
   return (
     <PaymentLayout
@@ -202,9 +208,10 @@ export default function Donate() {
           </Card>
           
           <Button 
-            className="w-full mt-6" 
+            className="w-full mt-8 text-lg py-6" 
+            size="lg"
             type="submit" 
-            disabled={isLoading || (!selectedAmount && !customAmount)}
+            disabled={isLoading || !validateAmount()}
           >
             {isLoading ? "Processing..." : `Donate $${getDonationAmount() || '0'}`}
           </Button>

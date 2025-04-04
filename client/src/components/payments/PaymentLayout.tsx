@@ -23,7 +23,7 @@ export function PaymentLayout({
   isLoading
 }: PaymentLayoutProps) {
   return (
-    <div className="container max-w-3xl py-12 mx-auto flex items-center justify-center">
+    <div className="container max-w-3xl pt-24 pb-16 mx-auto">
       <Card className="w-full">
         <CardHeader className="space-y-1 text-center">
           <CardTitle className="text-2xl">{title}</CardTitle>
@@ -31,9 +31,9 @@ export function PaymentLayout({
             {description}
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-6 max-h-[60vh] overflow-y-auto">
+        <CardContent className="p-6">
           {clientSecret ? (
-            <div className="overflow-y-auto max-h-full">
+            <div className="max-h-full">
               <Elements 
                 stripe={stripePromise} 
                 options={{ 

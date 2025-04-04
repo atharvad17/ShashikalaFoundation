@@ -35,6 +35,13 @@ export default function EventRegistration() {
   }, [event, navigate, toast]);
 
   const totalAmount = event ? event.price * attendees : 0;
+  
+  // Make sure there's a reasonable minimum attendees count
+  useEffect(() => {
+    if (attendees < 1) {
+      setAttendees(1);
+    }
+  }, [attendees]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
