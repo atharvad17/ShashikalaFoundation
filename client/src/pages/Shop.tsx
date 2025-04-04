@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useCart } from '@/contexts/CartContext';
 
 interface Product {
   id: number;
@@ -15,6 +16,7 @@ interface Product {
 
 const Shop = () => {
   const { toast } = useToast();
+  const { addToCart } = useCart();
   
   const products: Product[] = [
     {
@@ -68,6 +70,7 @@ const Shop = () => {
   ];
 
   const handleAddToCart = (product: Product) => {
+    addToCart(product);
     toast({
       title: "Added to cart",
       description: `${product.title} has been added to your cart.`,

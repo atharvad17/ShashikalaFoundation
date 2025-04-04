@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,15 +7,10 @@ import {
 } from "@/components/ui/sheet";
 import { Heart } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { CartIcon } from '@/components/Cart';
 
 const NavBar = () => {
   const [location] = useLocation();
   const isMobile = useIsMobile();
-  const [donationOpen, setDonationOpen] = useState(false);
 
   const navItems = [
     { href: '/shop', label: 'Shop' },
@@ -57,47 +51,12 @@ const NavBar = () => {
           )}
           
           <div className="flex items-center space-x-4">
-            <Dialog open={donationOpen} onOpenChange={setDonationOpen}>
-              <DialogTrigger asChild>
-                <Button className="bg-[#FFA07A] hover:bg-[#FF8C66] text-white px-4 py-1.5 rounded-full flex items-center gap-1.5 font-medium">
-                  <Heart className="h-4 w-4" />
-                  <span>Donate Now</span>
-                </Button>
-              </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Make a Donation</DialogTitle>
-                <DialogDescription>
-                  Your contribution helps us provide art education and creative opportunities to our community.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Name
-                  </Label>
-                  <Input id="name" className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="email" className="text-right">
-                    Email
-                  </Label>
-                  <Input id="email" className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="amount" className="text-right">
-                    Amount ($)
-                  </Label>
-                  <Input id="amount" type="number" min="5" className="col-span-3" defaultValue="25" />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit" onClick={() => setDonationOpen(false)}>
-                  Complete Donation
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+            <Link href="/donate">
+              <Button className="bg-[#FFA07A] hover:bg-[#FF8C66] text-white px-4 py-1.5 rounded-full flex items-center gap-1.5 font-medium">
+                <Heart className="h-4 w-4" />
+                <span>Donate Now</span>
+              </Button>
+            </Link>
           </div>
           
           {isMobile && (
