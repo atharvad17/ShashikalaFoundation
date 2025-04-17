@@ -14,6 +14,7 @@ import ArtistProfile from "@/pages/ArtistProfile";
 import Donate from "@/pages/Donate";
 import Checkout from "@/pages/Checkout";
 import EventRegistration from "@/pages/EventRegistration";
+import EventCheckout from "@/pages/EventCheckout";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/checkout" component={Checkout} />
       <Route path="/event-registration" component={EventRegistration} />
       <Route path="/event-registration/:id" component={EventRegistration} />
+      <Route path="/event-checkout" component={EventCheckout} />
       <Route path="/payment-success" component={PaymentSuccess} />
       <Route component={NotFound} />
     </Switch>

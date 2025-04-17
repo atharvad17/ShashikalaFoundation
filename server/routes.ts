@@ -87,6 +87,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Generic payment intent route that can be used by any component
+  app.post('/api/create-payment-intent', async (req, res) => {
+    try {
+      const { amount, currency = 'usd', metadata = {}, payment_method_types = ['card'] } = req.body;
+      
+      if (!amount || amount < 1) {
+        return res.status(400).json({ message: 'Invalid payment amount' });
+      }
+      
+      // Create a PaymentIntent with the specified amount
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100), // Convert to cents
+        currency,
+        metadata,
+        payment_method_types,
+      });
+      
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (error: any) {
+      res.status(500).json({ message: 'Error creating payment intent: ' + error.message });
+    }
+  });
+  
   // API routes for free event RSVPs (no payment required)
   app.post('/api/events/rsvp', (req, res) => {
     const { eventId, name, email, attendees } = req.body;
