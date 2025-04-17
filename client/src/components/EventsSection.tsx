@@ -44,7 +44,7 @@ const EventsSection = () => {
     setIsOpen(true);
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!rsvpEvent) return;
@@ -64,12 +64,63 @@ const EventsSection = () => {
         title: "RSVP Confirmed",
         description: `You've successfully RSVP'd to ${rsvpEvent.title}.`
       });
+      
+      // Ask if they'd like to make a donation
+      setTimeout(() => {
+        const donate = window.confirm(`Thank you for your RSVP to ${rsvpEvent.title}. Would you like to make a donation to support our organization?`);
+        
+        if (donate) {
+          // Redirect to donation page
+          navigate('/donate');
+        }
+      }, 500);
+      
       setIsOpen(false);
     } else {
-      // For paid events, redirect to the payment page with event details
-      // Using route parameter instead of query parameter
-      navigate(`/event-registration/${rsvpEvent.id}`);
-      setIsOpen(false);
+      // For paid events, process payment directly without redirecting
+      try {
+        // Create registration data from form
+        const registrationData = {
+          eventId: rsvpEvent.id,
+          firstName,
+          lastName,
+          middleName,
+          email,
+          contact,
+          address,
+          addressLine2,
+          city,
+          state,
+          zipcode,
+          attendees,
+          totalAmount: rsvpEvent.price * attendees
+        };
+        
+        // Store the data in localStorage so the success page can access it
+        localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
+        
+        // Normally, you would create a payment intent on your server
+        // For demonstration purposes, we'll simulate a successful payment
+        toast({
+          title: "Registration Complete",
+          description: `You've successfully registered for ${rsvpEvent.title}.`,
+        });
+        
+        // Close the dialog
+        setIsOpen(false);
+        
+        // Redirect to success page
+        setTimeout(() => {
+          navigate('/payment-success');
+        }, 1500);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to process your registration. Please try again.",
+          variant: "destructive",
+        });
+        console.error("Registration error:", error);
+      }
     }
   };
 

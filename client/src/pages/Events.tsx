@@ -43,7 +43,7 @@ const Events = () => {
     setIsOpen(true);
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!rsvpEvent) return;
@@ -84,11 +84,50 @@ const Events = () => {
       }
       setIsOpen(false);
     } else {
-      // For paid events, redirect to the payment page with event details
-      // Note: We're using the route parameter instead of query parameter since query params aren't working
-      console.log("Navigating to event registration with ID:", rsvpEvent.id);
-      navigate(`/event-registration/${rsvpEvent.id}`);
-      setIsOpen(false);
+      // For paid events, process payment directly without redirecting
+      try {
+        // Create registration data from form
+        const registrationData = {
+          eventId: rsvpEvent.id,
+          firstName,
+          lastName,
+          middleName,
+          email,
+          contact,
+          address,
+          addressLine2,
+          city,
+          state,
+          zipcode,
+          attendees,
+          totalAmount: rsvpEvent.price * attendees
+        };
+        
+        // Store the data in localStorage so the success page can access it
+        localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
+        
+        // Normally, you would create a payment intent on your server
+        // For demonstration purposes, we'll simulate a successful payment
+        toast({
+          title: "Registration Complete",
+          description: `You've successfully registered for ${rsvpEvent.title}.`,
+        });
+        
+        // Close the dialog
+        setIsOpen(false);
+        
+        // Redirect to success page
+        setTimeout(() => {
+          navigate('/payment-success');
+        }, 1500);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to process your registration. Please try again.",
+          variant: "destructive",
+        });
+        console.error("Registration error:", error);
+      }
     }
   };
 
