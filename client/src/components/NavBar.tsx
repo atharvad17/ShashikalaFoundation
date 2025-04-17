@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Heart } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import logoImage from "@assets/shashikalaFoundationLogo_1743796779394.jpg";
 
 const NavBar = () => {
   const [location] = useLocation();
@@ -22,12 +23,13 @@ const NavBar = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <Link href="/">
-              <div className="flex items-center">
+              <div className="flex items-center gap-3">
                 <img
-                  src="/assets/logo.png"
+                  src={logoImage}
                   alt="Shashikala Foundation Logo"
-                  className="h-16 w-auto"
+                  className="h-12 w-auto bg-white p-1 rounded"
                 />
+                <span className="text-lg font-semibold hidden sm:block">Shashikala Foundation</span>
               </div>
             </Link>
           </div>

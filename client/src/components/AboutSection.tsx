@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 
 const AboutSection = () => {
   return (
@@ -9,10 +9,16 @@ const AboutSection = () => {
           <div>
             <h2 className="text-3xl font-bold mb-6">Who We Are</h2>
             <p className="text-lg text-gray-700 mb-6">
-              Shashikala Foundation is a non-profit organization dedicated to spreading joy through visual arts. We aim to empower individuals by providing them with artistic skills and a creative outlet for self-expression.
+              Shashikala Foundation is a non-profit organization dedicated to
+              spreading joy through visual arts. We aim to empower individuals
+              by providing them with artistic skills and a creative outlet for
+              self-expression.
             </p>
             <p className="text-lg text-gray-700 mb-6">
-              Our mission is to make art accessible to everyone, regardless of their background or experience level. We believe in the transformative power of creativity and its ability to heal, connect, and inspire.
+              Our mission is to make art accessible to everyone, regardless of
+              their background or experience level. We believe in the
+              transformative power of creativity and its ability to heal,
+              connect, and inspire.
             </p>
             <div className="mt-8">
               <Link href="/about">
@@ -21,13 +27,6 @@ const AboutSection = () => {
                 </Button>
               </Link>
             </div>
-          </div>
-          <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-xl">
-            <img 
-              src="https://images.unsplash.com/photo-1596710614513-1b46cf61c3f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" 
-              alt="Art workshop" 
-              className="object-cover w-full h-full"
-            />
           </div>
         </div>
       </div>
