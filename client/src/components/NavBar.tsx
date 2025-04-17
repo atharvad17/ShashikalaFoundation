@@ -29,7 +29,6 @@ const NavBar = () => {
                   alt="Shashikala Foundation Logo"
                   className="h-12 w-auto bg-white p-1 rounded"
                 />
-                <span className="text-lg font-semibold hidden sm:block">Shashikala Foundation</span>
               </div>
             </Link>
           </div>

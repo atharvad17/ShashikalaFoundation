@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -13,6 +13,23 @@ interface TeamMember {
 
 const TeamSection = () => {
   const [hoveredMember, setHoveredMember] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if mobile on client-side only
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkIfMobile();
+    
+    // Set up listener for resize
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   const teamMembers: TeamMember[] = [
     // Executive Committee
@@ -157,16 +174,15 @@ const TeamSection = () => {
       <h2 className="text-3xl font-semibold mb-10 text-center">Our Team</h2>
       
       <Tabs defaultValue="executive" className="w-full">
-        <TabsList className="grid grid-cols-4 mb-8">
-          <TabsTrigger value="executive">Executive Committee</TabsTrigger>
-          <TabsTrigger value="youth">Youth Committee</TabsTrigger>
-          <TabsTrigger value="team">Core Team</TabsTrigger>
-          <TabsTrigger value="artist">Artists</TabsTrigger>
+        <TabsList className="grid grid-cols-3 mb-8">
+          <TabsTrigger value="executive" className="text-xs sm:text-sm md:text-base whitespace-normal h-auto py-2">Executive Committee</TabsTrigger>
+          <TabsTrigger value="youth" className="text-xs sm:text-sm md:text-base whitespace-normal h-auto py-2">Youth Committee</TabsTrigger>
+          <TabsTrigger value="team" className="text-xs sm:text-sm md:text-base whitespace-normal h-auto py-2">Core Team</TabsTrigger>
         </TabsList>
         
-        {['executive', 'youth', 'team', 'artist'].map((category) => (
+        {['executive', 'youth', 'team'].map((category) => (
           <TabsContent value={category} key={category}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
               {teamMembers
                 .filter(member => member.category === category)
                 .map(member => (
@@ -176,28 +192,28 @@ const TeamSection = () => {
                     onMouseEnter={() => setHoveredMember(member.id)}
                     onMouseLeave={() => setHoveredMember(null)}
                   >
-                    <div className="relative h-64 overflow-hidden">
+                    <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
                       <img 
                         src={member.image} 
                         alt={member.name} 
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       />
                       
-                      {/* Hover overlay with information */}
+                      {/* Information overlay - visible on hover for desktop, always visible on mobile */}
                       <div 
-                        className={`absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-4 text-white transition-opacity duration-300 ${
-                          hoveredMember === member.id ? 'opacity-100' : 'opacity-0'
+                        className={`absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-3 sm:p-4 text-white md:transition-opacity md:duration-300 ${
+                          hoveredMember === member.id || isMobile ? 'opacity-100' : 'opacity-0'
                         }`}
                       >
-                        <h3 className="text-xl font-bold">{member.name}</h3>
-                        <p className="text-sm">{member.title}</p>
-                        <p className="text-xs opacity-80">{member.location}</p>
+                        <h3 className="text-base sm:text-lg md:text-xl font-bold line-clamp-1">{member.name}</h3>
+                        <p className="text-xs sm:text-sm line-clamp-1">{member.title}</p>
+                        <p className="text-xs opacity-80 line-clamp-1">{member.location}</p>
                       </div>
                     </div>
                     
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold">{member.name}</h3>
-                      <p className="text-sm text-gray-600">{member.title}</p>
+                    <CardContent className="p-3 sm:p-4 md:p-5">
+                      <h3 className="font-semibold text-sm sm:text-base line-clamp-1">{member.name}</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 line-clamp-1">{member.title}</p>
                     </CardContent>
                   </Card>
                 ))
