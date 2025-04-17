@@ -10,16 +10,11 @@ import { useToast } from '@/hooks/use-toast';
 import { events } from '@/lib/data';
 
 export default function EventRegistration() {
-  // Check for URL query parameters
-  const [location] = useLocation();
-  const searchParams = new URLSearchParams(location.split('?')[1] || '');
-  const queryEventId = searchParams.get('id');
-  
-  // Also support route params for backward compatibility
+  // Only use route parameters since query parameters have been inconsistent
   const [routeMatch, params] = useRoute('/event-registration/:id');
   
-  // Determine event ID from either query param or route param
-  const eventId = queryEventId ? parseInt(queryEventId) : params?.id ? parseInt(params.id) : null;
+  // Extract the event ID from the route parameters
+  const eventId = params?.id ? parseInt(params.id) : null;
   
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -32,8 +27,7 @@ export default function EventRegistration() {
   const { toast } = useToast();
   
   // For debugging, log the values to help identify the issue
-  console.log("Query event ID:", queryEventId);
-  console.log("Event ID parsed:", eventId);
+  console.log("Event ID from route param:", eventId);
   console.log("Available events:", events.map(e => e.id));
   
   // Find the event with the matching ID
