@@ -7,19 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-
-interface Event {
-  id: number;
-  title: string;
-  description: string;
-  date: {
-    day: string;
-    month: string;
-  };
-  time: string;
-  location: string;
-  price: number; // Price in USD, 0 for free events
-}
+import { events, Event } from '@/lib/data';
 
 const EventsSection = () => {
   const [rsvpEvent, setRsvpEvent] = useState<Event | null>(null);
@@ -38,44 +26,7 @@ const EventsSection = () => {
   const [attendees, setAttendees] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   
-  const events: Event[] = [
-    {
-      id: 1,
-      title: 'Summer Art Fair',
-      description: 'Join us for our annual summer art fair featuring works from over 50 local artists.',
-      date: {
-        day: '15',
-        month: 'Aug'
-      },
-      time: '10:00 AM - 4:00 PM',
-      location: 'Central Park, Main Plaza',
-      price: 0 // Free event
-    },
-    {
-      id: 2,
-      title: 'Watercolor Workshop',
-      description: 'Learn essential watercolor techniques from our experienced instructors in this hands-on workshop.',
-      date: {
-        day: '23',
-        month: 'Aug'
-      },
-      time: '2:00 PM - 5:00 PM',
-      location: 'Art Studio, 123 Main St',
-      price: 25 // $25 per person
-    },
-    {
-      id: 3,
-      title: 'Artist Talk: Modern Expressionism',
-      description: 'Join renowned artist Maria Sanchez as she discusses the influence of expressionism in contemporary art.',
-      date: {
-        day: '30',
-        month: 'Aug'
-      },
-      time: '6:30 PM - 8:00 PM',
-      location: 'Community Gallery',
-      price: 10 // $10 per person
-    }
-  ];
+  // We're now importing events from lib/data.ts for consistency across components
 
   const handleRSVP = (event: Event) => {
     setRsvpEvent(event);
@@ -116,7 +67,8 @@ const EventsSection = () => {
       setIsOpen(false);
     } else {
       // For paid events, redirect to the payment page with event details
-      navigate(`/event-registration?id=${rsvpEvent.id}`);
+      // Using route parameter instead of query parameter
+      navigate(`/event-registration/${rsvpEvent.id}`);
       setIsOpen(false);
     }
   };

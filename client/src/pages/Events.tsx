@@ -85,9 +85,9 @@ const Events = () => {
       setIsOpen(false);
     } else {
       // For paid events, redirect to the payment page with event details
-      // Note: We're using stringified eventId and manually checking console logs to debug
+      // Note: We're using the route parameter instead of query parameter since query params aren't working
       console.log("Navigating to event registration with ID:", rsvpEvent.id);
-      navigate(`/event-registration?id=${rsvpEvent.id}`);
+      navigate(`/event-registration/${rsvpEvent.id}`);
       setIsOpen(false);
     }
   };
