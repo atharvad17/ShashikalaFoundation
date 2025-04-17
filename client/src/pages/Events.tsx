@@ -103,23 +103,22 @@ const Events = () => {
           totalAmount: rsvpEvent.price * attendees
         };
         
-        // Store the data in localStorage so the success page can access it
+        // Store the data in localStorage so the payment page can access it
         localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
-        
-        // Normally, you would create a payment intent on your server
-        // For demonstration purposes, we'll simulate a successful payment
-        toast({
-          title: "Registration Complete",
-          description: `You've successfully registered for ${rsvpEvent.title}.`,
-        });
         
         // Close the dialog
         setIsOpen(false);
         
-        // Redirect to success page
+        // Show a loading toast
+        toast({
+          title: "Preparing Payment",
+          description: "Redirecting to payment page...",
+        });
+        
+        // Redirect to the new payment page
         setTimeout(() => {
-          navigate('/payment-success');
-        }, 1500);
+          navigate('/event-checkout');
+        }, 500);
       } catch (error) {
         toast({
           title: "Error",
