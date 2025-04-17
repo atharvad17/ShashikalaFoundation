@@ -57,15 +57,36 @@ const Events = () => {
       return;
     }
     
-    // For free events, just confirm RSVP
+    // For free events, offer a donation option first
     if (rsvpEvent.price === 0) {
-      toast({
-        title: "RSVP Confirmed",
-        description: `You've successfully RSVP'd to ${rsvpEvent.title}.`
-      });
+      // Submit RSVP data
+      try {
+        // Here you would normally send the RSVP data to your backend
+        // For now, just show a success message
+        toast({
+          title: "RSVP Confirmed",
+          description: `You've successfully RSVP'd to ${rsvpEvent.title}.`
+        });
+        
+        // Ask if they'd like to make a donation
+        const donate = window.confirm(`Thank you for your RSVP to ${rsvpEvent.title}. Would you like to make a donation to support our organization?`);
+        
+        if (donate) {
+          // Redirect to donation page
+          navigate('/donate');
+        }
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to process your RSVP. Please try again.",
+          variant: "destructive",
+        });
+      }
       setIsOpen(false);
     } else {
       // For paid events, redirect to the payment page with event details
+      // Note: We're using stringified eventId and manually checking console logs to debug
+      console.log("Navigating to event registration with ID:", rsvpEvent.id);
       navigate(`/event-registration?id=${rsvpEvent.id}`);
       setIsOpen(false);
     }
