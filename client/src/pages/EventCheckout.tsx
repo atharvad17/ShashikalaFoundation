@@ -65,6 +65,62 @@ const CheckoutForm = () => {
 
     setIsProcessing(true);
 
+    /* 
+    // API INTEGRATION POINT: POST Confirm Stripe Payment
+    // This uses Stripe's client-side SDK to confirm the payment, but you can add an additional
+    // server call to track payment confirmation status in your database
+    // Example API call that could be triggered after successful payment:
+    // POST: ${BASE_URL}/api/events/confirm-registration
+    // 
+    // async function confirmRegistration() {
+    //   try {
+    //     // First confirm payment with Stripe
+    //     const { error, paymentIntent } = await stripe.confirmPayment({
+    //       elements,
+    //       confirmParams: {
+    //         return_url: window.location.origin + '/payment-success',
+    //       },
+    //       redirect: 'if_required'
+    //     });
+    //
+    //     if (error) {
+    //       throw new Error(error.message || 'Payment failed');
+    //     }
+    //
+    //     if (paymentIntent && paymentIntent.status === 'succeeded') {
+    //       // Then update your registration status in your database
+    //       const response = await fetch(`${BASE_URL}/api/events/confirm-registration`, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //           registrationId: localStorage.getItem('eventRegistrationId'),
+    //           paymentIntentId: paymentIntent.id,
+    //           status: 'completed'
+    //         }),
+    //       });
+    //       
+    //       if (!response.ok) {
+    //         console.warn('Registration confirmation update failed, but payment succeeded');
+    //       }
+    //       
+    //       // Redirect to success page
+    //       window.location.href = window.location.origin + '/payment-success';
+    //     }
+    //   } catch (error) {
+    //     toast({
+    //       title: "Payment Failed",
+    //       description: error.message || "An error occurred during payment processing.",
+    //       variant: "destructive",
+    //     });
+    //     setIsProcessing(false);
+    //   }
+    // }
+    // 
+    // confirmRegistration();
+    */
+
     try {
       const { error } = await stripe.confirmPayment({
         elements,
@@ -189,6 +245,48 @@ export default function EventCheckout() {
     try {
       const parsedData = JSON.parse(storedData) as RegistrationData;
       setRegistrationData(parsedData);
+      
+      /* 
+      // API INTEGRATION POINT: POST Create Event Payment Intent
+      // This would create a payment intent with the external API for event registration
+      // Example API call structure - the actual implementation is below using apiRequest helper
+      // POST: ${BASE_URL}/api/create-payment-intent
+      // 
+      // async function createEventPaymentIntent() {
+      //   try {
+      //     const response = await fetch(`${BASE_URL}/api/create-payment-intent`, {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //       },
+      //       body: JSON.stringify({
+      //         amount: parsedData.totalAmount,
+      //         currency: 'usd',
+      //         payment_method_types: ['card'],
+      //         metadata: {
+      //           eventId: parsedData.eventId,
+      //           attendees: parsedData.attendees,
+      //         }
+      //       }),
+      //     });
+      // 
+      //     if (!response.ok) {
+      //       const errorData = await response.json();
+      //       throw new Error(errorData.message || 'Could not create payment intent');
+      //     }
+      //
+      //     const data = await response.json();
+      //     setClientSecret(data.clientSecret);
+      //   } catch (error) {
+      //     console.error("Error creating payment intent:", error);
+      //     setError("Failed to initialize payment. Please try again.");
+      //   } finally {
+      //     setIsLoading(false);
+      //   }
+      // }
+      // 
+      // createEventPaymentIntent();
+      */
       
       // Create a payment intent server-side
       apiRequest('POST', '/api/create-payment-intent', {

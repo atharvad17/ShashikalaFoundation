@@ -59,6 +59,50 @@ export default function Donate() {
     
     setIsLoading(true);
     
+    /* 
+    // API INTEGRATION POINT: POST Create Donation Payment Intent
+    // This would create a payment intent with the external API for a donation
+    // Example API call structure - the actual implementation is below using apiRequest helper
+    // POST: ${BASE_URL}/api/create-donation-intent
+    // 
+    // async function createDonationIntent() {
+    //   try {
+    //     const response = await fetch(`${BASE_URL}/api/create-donation-intent`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({
+    //         amount: amount,
+    //         donorName: anonymous ? 'Anonymous' : donorName,
+    //         email: anonymous ? '' : email,
+    //         message: message,
+    //         anonymous: anonymous
+    //       }),
+    //     });
+    // 
+    //     if (!response.ok) {
+    //       const errorData = await response.json();
+    //       throw new Error(errorData.message || 'Could not create donation intent');
+    //     }
+    //
+    //     const data = await response.json();
+    //     setClientSecret(data.clientSecret);
+    //     setShowPaymentForm(true);
+    //   } catch (error) {
+    //     toast({
+    //       title: "Error",
+    //       description: "Failed to process your donation. Please try again.",
+    //       variant: "destructive",
+    //     });
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // }
+    // 
+    // createDonationIntent();
+    */
+    
     try {
       const response = await apiRequest('POST', '/api/create-donation-intent', { amount });
       const data = await response.json();

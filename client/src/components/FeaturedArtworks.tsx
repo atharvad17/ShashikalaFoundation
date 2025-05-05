@@ -18,6 +18,31 @@ const FeaturedArtworks = () => {
   const { toast } = useToast();
   const { addToCart } = useCart();
   
+  /* 
+  // API INTEGRATION POINT: GET Featured Products/Artworks
+  // This would fetch featured or top-selling artwork products from the external API
+  // Example API call:
+  // GET: ${BASE_URL}/api/products/featured
+  // 
+  // const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  //
+  // useEffect(() => {
+  //   async function fetchFeaturedProducts() {
+  //     try {
+  //       const response = await fetch(`${BASE_URL}/api/products/featured`);
+  //       if (!response.ok) throw new Error('Failed to fetch featured products');
+  //       const data = await response.json();
+  //       setFeaturedProducts(data);
+  //     } catch (error) {
+  //       console.error('Error fetching featured products:', error);
+  //       // You can set some fallback or error state here
+  //     }
+  //   }
+  //   
+  //   fetchFeaturedProducts();
+  // }, []);
+  */
+  
   // Top selling artwork items - a subset of products from the Shop page
   const featuredProducts: Product[] = [
     {
