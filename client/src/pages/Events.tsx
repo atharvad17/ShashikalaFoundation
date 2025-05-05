@@ -10,6 +10,35 @@ import { useLocation } from 'wouter';
 import { useToast } from '@/hooks/use-toast';
 import { events, Event } from '@/lib/data';
 
+/* 
+// API INTEGRATION POINT: GET Events List
+// This would fetch all events from the external API
+// Example API call:
+// GET: ${BASE_URL}/api/events
+// 
+// async function fetchEvents() {
+//   try {
+//     const response = await fetch(`${BASE_URL}/api/events`);
+//     if (!response.ok) throw new Error('Failed to fetch events');
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error('Error fetching events:', error);
+//     return [];
+//   }
+// }
+//
+// const [events, setEvents] = useState<Event[]>([]);
+//
+// useEffect(() => {
+//   async function loadEvents() {
+//     const eventsData = await fetchEvents();
+//     setEvents(eventsData);
+//   }
+//   loadEvents();
+// }, []);
+*/
+
 const Events = () => {
   const [rsvpEvent, setRsvpEvent] = useState<Event | null>(null);
   const [, navigate] = useLocation();
@@ -59,6 +88,68 @@ const Events = () => {
     
     // For free events, offer a donation option first
     if (rsvpEvent.price === 0) {
+      /* 
+      // API INTEGRATION POINT: POST Event RSVP
+      // This would send RSVP data to the external API for free events
+      // Example API call:
+      // POST: ${BASE_URL}/api/events/rsvp
+      // 
+      // async function submitRSVP() {
+      //   try {
+      //     const rsvpData = {
+      //       eventId: rsvpEvent.id,
+      //       firstName,
+      //       lastName,
+      //       middleName,
+      //       email,
+      //       contact,
+      //       address,
+      //       addressLine2,
+      //       city,
+      //       state,
+      //       zipcode,
+      //       attendees
+      //     };
+      //
+      //     const response = await fetch(`${BASE_URL}/api/events/rsvp`, {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //       },
+      //       body: JSON.stringify(rsvpData),
+      //     });
+      // 
+      //     if (!response.ok) {
+      //       const errorData = await response.json();
+      //       throw new Error(errorData.message || 'RSVP submission failed');
+      //     }
+      //
+      //     toast({
+      //       title: "RSVP Confirmed",
+      //       description: `You've successfully RSVP'd to ${rsvpEvent.title}.`
+      //     });
+      //     
+      //     // Ask if they'd like to make a donation
+      //     const donate = window.confirm(`Thank you for your RSVP to ${rsvpEvent.title}. Would you like to make a donation to support our organization?`);
+      //     
+      //     if (donate) {
+      //       // Redirect to donation page
+      //       navigate('/donate');
+      //     }
+      //     
+      //     setIsOpen(false);
+      //   } catch (error) {
+      //     toast({
+      //       title: "Error",
+      //       description: error.message || "Failed to process your RSVP. Please try again.",
+      //       variant: "destructive",
+      //     });
+      //   }
+      // }
+      // 
+      // submitRSVP();
+      */
+      
       // Submit RSVP data
       try {
         // Here you would normally send the RSVP data to your backend
@@ -84,6 +175,76 @@ const Events = () => {
       }
       setIsOpen(false);
     } else {
+      /* 
+      // API INTEGRATION POINT: POST Event Registration for Paid Events
+      // This would initiate a paid event registration with the external API
+      // Example API call:
+      // POST: ${BASE_URL}/api/events/register
+      // 
+      // async function registerForEvent() {
+      //   try {
+      //     const registrationData = {
+      //       eventId: rsvpEvent.id,
+      //       firstName,
+      //       lastName,
+      //       middleName,
+      //       email,
+      //       contact,
+      //       address,
+      //       addressLine2,
+      //       city,
+      //       state,
+      //       zipcode,
+      //       attendees,
+      //       totalAmount: rsvpEvent.price * attendees
+      //     };
+      //
+      //     // First, create a registration record in the database
+      //     const registerResponse = await fetch(`${BASE_URL}/api/events/register`, {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //       },
+      //       body: JSON.stringify(registrationData),
+      //     });
+      // 
+      //     if (!registerResponse.ok) {
+      //       const errorData = await registerResponse.json();
+      //       throw new Error(errorData.message || 'Registration failed');
+      //     }
+      //
+      //     const registerResult = await registerResponse.json();
+      //     
+      //     // Store the registration ID and data for the payment page
+      //     localStorage.setItem('eventRegistrationId', registerResult.registrationId);
+      //     localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
+      //     
+      //     // Close the dialog
+      //     setIsOpen(false);
+      //     
+      //     // Show a loading toast
+      //     toast({
+      //       title: "Preparing Payment",
+      //       description: "Redirecting to payment page...",
+      //     });
+      //     
+      //     // Redirect to the payment page
+      //     setTimeout(() => {
+      //       navigate('/event-checkout');
+      //     }, 500);
+      //   } catch (error) {
+      //     toast({
+      //       title: "Error",
+      //       description: error.message || "Failed to process your registration. Please try again.",
+      //       variant: "destructive",
+      //     });
+      //     console.error("Registration error:", error);
+      //   }
+      // }
+      // 
+      // registerForEvent();
+      */
+      
       // For paid events, process payment directly without redirecting
       try {
         // Create registration data from form
