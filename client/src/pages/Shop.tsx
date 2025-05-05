@@ -18,6 +18,25 @@ const Shop = () => {
   const { toast } = useToast();
   const { addToCart } = useCart();
   
+  /* 
+  // API INTEGRATION POINT: GET Products/Artworks
+  // This would fetch all artwork products from the external API
+  // Example API call:
+  // GET: ${BASE_URL}/api/products
+  // 
+  // async function fetchProducts() {
+  //   try {
+  //     const response = await fetch(`${BASE_URL}/api/products`);
+  //     if (!response.ok) throw new Error('Failed to fetch products');
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //     console.error('Error fetching products:', error);
+  //     return [];
+  //   }
+  // }
+  */
+
   const products: Product[] = [
     {
       id: 1,

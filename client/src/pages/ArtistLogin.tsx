@@ -41,6 +41,51 @@ const ArtistLogin = () => {
       return;
     }
     
+    /* 
+    // API INTEGRATION POINT: POST Artist Login
+    // This would authenticate an artist with the external API
+    // Example API call:
+    // POST: ${BASE_URL}/api/artists/login
+    // 
+    // async function loginArtist() {
+    //   try {
+    //     const response = await fetch(`${BASE_URL}/api/artists/login`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+    //     });
+    // 
+    //     if (!response.ok) {
+    //       const errorData = await response.json();
+    //       throw new Error(errorData.message || 'Login failed');
+    //     }
+    // 
+    //     const data = await response.json();
+    //     // Store token in localStorage or secure cookie
+    //     localStorage.setItem('artistToken', data.token);
+    //     localStorage.setItem('artistId', data.artistId);
+    // 
+    //     toast({
+    //       title: "Login successful",
+    //       description: "You have been logged in.",
+    //     });
+    //
+    //     // Redirect to artist profile page
+    //     setLocation('/artist-profile');
+    //   } catch (error) {
+    //     toast({
+    //       title: "Login failed",
+    //       description: error.message || "Invalid credentials",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // }
+    // 
+    // loginArtist();
+    */
+    
     // This would be replaced with an actual API call
     toast({
       title: "Login successful",
@@ -72,6 +117,62 @@ const ArtistLogin = () => {
       return;
     }
     
+    /* 
+    // API INTEGRATION POINT: POST Artist Registration/Signup
+    // This would register a new artist with the external API
+    // Example API call:
+    // POST: ${BASE_URL}/api/artists/register
+    // 
+    // async function registerArtist() {
+    //   try {
+    //     const artistData = {
+    //       firstName,
+    //       lastName,
+    //       email,
+    //       phoneNumber,
+    //       city,
+    //       state,
+    //       country,
+    //       password
+    //     };
+    //
+    //     const response = await fetch(`${BASE_URL}/api/artists/register`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(artistData),
+    //     });
+    // 
+    //     if (!response.ok) {
+    //       const errorData = await response.json();
+    //       throw new Error(errorData.message || 'Registration failed');
+    //     }
+    // 
+    //     const data = await response.json();
+    //     // Optionally auto-login the user after registration
+    //     localStorage.setItem('artistToken', data.token);
+    //     localStorage.setItem('artistId', data.artistId);
+    // 
+    //     toast({
+    //       title: "Signup successful",
+    //       description: "Your account has been created.",
+    //     });
+    //
+    //     // Redirect to artist profile page
+    //     setLocation('/artist-profile');
+    //   } catch (error) {
+    //     toast({
+    //       title: "Registration failed",
+    //       description: error.message || "Failed to create account",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // }
+    // 
+    // registerArtist();
+    */
+    
     // This would be replaced with an actual API call
     toast({
       title: "Signup successful",
@@ -93,6 +194,45 @@ const ArtistLogin = () => {
       });
       return;
     }
+    
+    /* 
+    // API INTEGRATION POINT: POST Password Reset Request
+    // This would send a password reset request to the external API
+    // Example API call:
+    // POST: ${BASE_URL}/api/artists/reset-password
+    // 
+    // async function requestPasswordReset() {
+    //   try {
+    //     const response = await fetch(`${BASE_URL}/api/artists/reset-password`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({ email: forgotPasswordEmail }),
+    //     });
+    // 
+    //     if (!response.ok) {
+    //       const errorData = await response.json();
+    //       throw new Error(errorData.message || 'Password reset request failed');
+    //     }
+    // 
+    //     toast({
+    //       title: "Password reset email sent",
+    //       description: "Please check your email for password reset instructions.",
+    //     });
+    //     
+    //     setShowForgotPassword(false);
+    //   } catch (error) {
+    //     toast({
+    //       title: "Error",
+    //       description: error.message || "Failed to process password reset request",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // }
+    // 
+    // requestPasswordReset();
+    */
     
     // This would be replaced with an actual API call
     toast({
