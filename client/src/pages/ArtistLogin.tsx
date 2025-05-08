@@ -244,7 +244,7 @@ const ArtistLogin = () => {
   };
 
   return (
-    <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80)' }}>
+    <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-cover bg-center" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80)' }}>
       <div className="container mx-auto max-w-md">
         <div className="bg-white bg-opacity-95 p-8 rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold text-center mb-2">Welcome to the Artist Platform</h1>
