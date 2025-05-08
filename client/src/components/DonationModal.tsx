@@ -97,8 +97,26 @@ const DonationModal = ({
       // }
       */
       
-      // In a real application, we would process payment here
-      await apiRequest('POST', '/api/donate', { name, email, amount });
+      // Mark payment type as donation before processing
+      localStorage.setItem('currentPaymentType', 'donation');
+      localStorage.setItem('donorName', name);
+      localStorage.setItem('donorEmail', email);
+      
+      // Create a donation payment intent
+      const response = await apiRequest('POST', '/api/create-donation-intent', { 
+        name, 
+        email, 
+        amount 
+      });
+      
+      const data = await response.json();
+      
+      if (data.clientSecret) {
+        // Redirect to donation payment page
+        window.location.href = `/donate?clientSecret=${data.clientSecret}&amount=${amount}`;
+      } else {
+        throw new Error('Failed to initialize donation payment');
+      }
       
       toast({
         title: "Thank you for your donation!",
