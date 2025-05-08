@@ -421,8 +421,8 @@ export default function PaymentSuccess() {
   };
   
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#9DD3DD] to-[#87CEEB] p-4">
-      <Card className="w-full max-w-lg shadow-lg">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#9DD3DD] to-[#87CEEB] p-4 pt-32 pb-16">
+      <Card className="w-full max-w-2xl shadow-lg">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <CheckCircle className="h-16 w-16 text-green-500" />
