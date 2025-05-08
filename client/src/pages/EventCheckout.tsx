@@ -367,7 +367,7 @@ export default function EventCheckout() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 py-12">
+    <div className="max-w-3xl mx-auto p-6 py-12 pt-32">
       <h1 className="text-3xl font-bold mb-8 text-center">Complete Your Purchase</h1>
       
       {registrationData && (

@@ -497,7 +497,7 @@ const ArtistProfile = () => {
   ];
   
   return (
-    <div className="flex min-h-screen bg-[#fdf6e6]">
+    <div className="flex min-h-screen bg-[#fdf6e6] pt-20">
       {/* Left Sidebar */}
       <div className="w-64 p-4 border-r border-gray-200 flex flex-col">
         <div className="text-center mb-8">
