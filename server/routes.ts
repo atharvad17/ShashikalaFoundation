@@ -13,6 +13,51 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   /* 
+  // API INTEGRATION POINT: Stripe Webhook Handler
+  // External API information:
+  // - Create a webhook endpoint in your Stripe dashboard
+  // - Set the webhook endpoint URL to https://your-domain.com/api/stripe-webhook
+  // - Get the webhook signing secret from your Stripe dashboard
+  //
+  // This endpoint receives events from Stripe, such as successful payments,
+  // subscription updates, etc. The webhook secret is used to verify the request
+  // came from Stripe and not a malicious source.
+  //
+  // Example implementation:
+  //
+  // app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (req, res) => {
+  //   const sig = req.headers['stripe-signature'] as string;
+  //   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  //
+  //   if (!webhookSecret) {
+  //     return res.status(400).send('Webhook secret not configured');
+  //   }
+  //
+  //   let event;
+  //
+  //   try {
+  //     event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+  //   } catch (err: any) {
+  //     return res.status(400).send(`Webhook Error: ${err.message}`);
+  //   }
+  //
+  //   // Handle different event types
+  //   switch (event.type) {
+  //     case 'payment_intent.succeeded':
+  //       const paymentIntent = event.data.object;
+  //       // Handle successful payment (update order status, send confirmation, etc.)
+  //       break;
+  //     case 'payment_intent.payment_failed':
+  //       // Handle failed payment
+  //       break;
+  //     default:
+  //       console.log(`Unhandled event type: ${event.type}`);
+  //   }
+  //
+  //   res.json({ received: true });
+  // });
+  */
+  /* 
   // API INTEGRATION POINT: POST Create Donation Intent
   // External API Endpoint: https://apis-1b88.onrender.com/api/donate
   //

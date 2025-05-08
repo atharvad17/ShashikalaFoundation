@@ -85,6 +85,33 @@ export default function EventRegistration() {
     try {
       // For free events, submit RSVP, then show a donation prompt
       if (event.price === 0) {
+        /* 
+        // API INTEGRATION POINT: POST Event RSVP 
+        // External API Endpoint: https://apis-1b88.onrender.com/api/event/rsvp
+        //
+        // This would submit an RSVP for a free event using the external API
+        //
+        // const response = await fetch('https://apis-1b88.onrender.com/api/event/rsvp', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({ 
+        //     eventId: event.id,
+        //     name,
+        //     email,
+        //     attendees
+        //   }),
+        // });
+        //
+        // const data = await response.json();
+        // const success = data && data.success;
+        // 
+        // if (!success) {
+        //   throw new Error('Failed to submit RSVP');
+        // }
+        */
+        
         // Simulate API request for RSVP
         // In a real app, you'd send this to your backend
         // const response = await apiRequest('POST', '/api/events/rsvp', { 

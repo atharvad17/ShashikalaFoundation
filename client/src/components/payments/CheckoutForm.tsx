@@ -31,6 +31,18 @@ export function CheckoutForm({
 
     setIsLoading(true);
 
+    /* 
+    // API INTEGRATION POINT: Stripe Payment Confirmation
+    // This is where the payment is processed with Stripe's confirmPayment API
+    // 
+    // After receiving a client secret from the server, this code tells Stripe to:
+    // 1. Process the payment with the details collected via Stripe Elements
+    // 2. Handle the payment confirmation result
+    // 3. Redirect if needed or handle the result in-place
+    //
+    // The redirect URL should match the route in your application that handles
+    // successful payments and displays a confirmation to the user
+    */
     try {
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,

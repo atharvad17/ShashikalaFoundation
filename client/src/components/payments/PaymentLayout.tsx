@@ -3,6 +3,15 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
+/* 
+// API INTEGRATION POINT: Stripe Configuration
+// External API information:
+// - The VITE_STRIPE_PUBLIC_KEY should be obtained from your Stripe dashboard
+// - This key is used to initialize the Stripe Elements for collecting payment details
+// - In a production environment, you would use the Stripe publishable key from your Stripe account
+// - Make sure to set the VITE_STRIPE_PUBLIC_KEY environment variable in your deployment environment
+*/
+
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || '');
