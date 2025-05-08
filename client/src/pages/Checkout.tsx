@@ -78,6 +78,22 @@ export default function Checkout() {
       // });
       */
       
+      // Save customer information for the receipt
+      localStorage.setItem('customerName', name);
+      localStorage.setItem('customerEmail', email);
+      localStorage.setItem('shippingAddress', JSON.stringify({
+        address,
+        city,
+        state,
+        zip
+      }));
+      
+      // Store cart items in localStorage for the success page
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      
+      // Mark this as a cart checkout payment before processing
+      localStorage.setItem('currentPaymentType', 'cart-checkout');
+      
       const response = await apiRequest('POST', '/api/create-cart-payment-intent', { 
         cartItems, 
         cartTotal 
@@ -87,6 +103,7 @@ export default function Checkout() {
       if (data.clientSecret) {
         setClientSecret(data.clientSecret);
         setShowPaymentForm(true);
+        window.scrollTo(0, 0); // Scroll to top so user can see payment form
       } else {
         throw new Error('Failed to initialize payment');
       }

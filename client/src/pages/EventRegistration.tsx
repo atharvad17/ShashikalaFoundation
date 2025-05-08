@@ -191,28 +191,58 @@ export default function EventRegistration() {
         // }
         */
         
-        // For paid events, let's try to work around the API issues by mocking the client secret
-        // In a real app, you'd get this from your backend
+        // For paid events, we'll create a real payment intent
         console.log("Attempting to process payment for event:", event.id);
         
-        // Normally you would get this from the server
-        // const response = await apiRequest('POST', '/api/create-event-registration-intent', { 
-        //   eventId: event.id, 
-        //   attendees,
-        //   pricePerAttendee: event.price 
-        // });
+        // Store the registration data for the checkout process
+        const registrationData = {
+          eventId: event.id,
+          firstName: name.split(' ')[0],
+          lastName: name.split(' ').slice(1).join(' '),
+          email,
+          contact: '',
+          address: '',
+          city: '',
+          state: '',
+          zipcode: '',
+          attendees,
+          totalAmount
+        };
         
-        // For demonstration, we'll just mock a successful payment flow
-        // This should be replaced with a real API call in production
-        // Scroll to top to ensure payment form is visible
-        window.scrollTo(0, 0);
+        localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
         
-        // Mock a client secret - in production this would come from your Stripe backend
-        const mockClientSecret = "pi_" + Math.random().toString(36).substring(2, 15) + "_secret_" + Math.random().toString(36).substring(2, 15);
-        setClientSecret(mockClientSecret);
-        setShowPaymentForm(true);
+        // Mark this as an event registration payment before processing
+        localStorage.setItem('currentPaymentType', 'event-registration');
         
-        console.log("Payment form should now be visible");
+        try {
+          // Create a payment intent on the server
+          const response = await apiRequest('POST', '/api/create-event-registration-intent', { 
+            eventId: event.id, 
+            attendees,
+            pricePerAttendee: event.price 
+          });
+          
+          const data = await response.json();
+          
+          if (data.clientSecret) {
+            // Scroll to top to ensure payment form is visible
+            window.scrollTo(0, 0);
+            
+            setClientSecret(data.clientSecret);
+            setShowPaymentForm(true);
+            
+            console.log("Payment form now visible with client secret:", data.clientSecret);
+          } else {
+            throw new Error('No client secret received');
+          }
+        } catch (error) {
+          console.error("Error creating payment intent:", error);
+          toast({
+            title: "Payment Error",
+            description: "There was an error setting up the payment. Please try again.",
+            variant: "destructive",
+          });
+        }
       }
     } catch (error) {
       toast({

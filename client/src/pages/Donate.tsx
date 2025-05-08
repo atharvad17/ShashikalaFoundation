@@ -104,12 +104,25 @@ export default function Donate() {
     */
     
     try {
-      const response = await apiRequest('POST', '/api/create-donation-intent', { amount });
+      // Mark this as a donation payment
+      localStorage.setItem('currentPaymentType', 'donation');
+      localStorage.setItem('donorName', anonymous ? 'Anonymous' : donorName);
+      localStorage.setItem('donorEmail', anonymous ? '' : email);
+      localStorage.setItem('donationAmount', amount.toString());
+      localStorage.setItem('donationMessage', message);
+      
+      const response = await apiRequest('POST', '/api/create-donation-intent', { 
+        amount,
+        name: anonymous ? 'Anonymous' : donorName,
+        email: anonymous ? '' : email,
+        message: message
+      });
       const data = await response.json();
       
       if (data.clientSecret) {
         setClientSecret(data.clientSecret);
         setShowPaymentForm(true);
+        window.scrollTo(0, 0); // Scroll to top so user can see payment form
       } else {
         throw new Error('Failed to initialize payment');
       }
@@ -129,7 +142,7 @@ export default function Donate() {
       title: "Thank You!",
       description: "Your donation has been successfully processed. We appreciate your support!",
     });
-    navigate('/');
+    navigate('/payment-success');
   };
   
   // Ensure donation amount is at least $1
