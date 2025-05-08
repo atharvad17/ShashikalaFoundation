@@ -50,6 +50,8 @@ export function PaymentLayout({
                   appearance: {
                     theme: 'stripe',
                   },
+                  paymentMethodType: 'card',
+                  paymentMethodOrder: ['card'],
                 }}
               >
                 {children}
