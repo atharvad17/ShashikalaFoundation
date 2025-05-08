@@ -43,13 +43,13 @@ const ArtistLogin = () => {
     
     /* 
     // API INTEGRATION POINT: POST Artist Login
+    // External API Endpoint: https://apis-1b88.onrender.com/api/auth/artist/login
+    // 
     // This would authenticate an artist with the external API
-    // Example API call:
-    // POST: ${BASE_URL}/api/artists/login
     // 
     // async function loginArtist() {
     //   try {
-    //     const response = await fetch(`${BASE_URL}/api/artists/login`, {
+    //     const response = await fetch('https://apis-1b88.onrender.com/api/auth/artist/login', {
     //       method: 'POST',
     //       headers: {
     //         'Content-Type': 'application/json',
@@ -119,9 +119,9 @@ const ArtistLogin = () => {
     
     /* 
     // API INTEGRATION POINT: POST Artist Registration/Signup
+    // External API Endpoint: https://apis-1b88.onrender.com/api/auth/artist/signup
+    //
     // This would register a new artist with the external API
-    // Example API call:
-    // POST: ${BASE_URL}/api/artists/register
     // 
     // async function registerArtist() {
     //   try {
@@ -136,7 +136,7 @@ const ArtistLogin = () => {
     //       password
     //     };
     //
-    //     const response = await fetch(`${BASE_URL}/api/artists/register`, {
+    //     const response = await fetch('https://apis-1b88.onrender.com/api/auth/artist/signup', {
     //       method: 'POST',
     //       headers: {
     //         'Content-Type': 'application/json',

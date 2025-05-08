@@ -14,12 +14,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 export async function registerRoutes(app: Express): Promise<Server> {
   /* 
   // API INTEGRATION POINT: POST Create Donation Intent
+  // External API Endpoint: https://apis-1b88.onrender.com/api/donate
+  //
   // This endpoint creates a Stripe payment intent for donations
   // In the external API implementation, you would:
   // 1. Validate the request data
   // 2. Create a payment intent with Stripe
   // 3. Store the donation information in your database
   // 4. Return the client secret to the frontend
+  //
+  // To fetch all donations: GET https://apis-1b88.onrender.com/api/donations
   //
   // The response format should match:
   // {
@@ -51,6 +55,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   /* 
   // API INTEGRATION POINT: POST Create Event Registration Intent
+  // External API information:
+  // - POST event registration: Will need to be implemented in the external API
+  // - GET all registrations: https://apis-1b88.onrender.com/api/registrations
+  // - GET/POST/PUT/DELETE events: https://apis-1b88.onrender.com/api/events 
+  // - GET/PUT/DELETE specific event: https://apis-1b88.onrender.com/api/events/<event_id>
+  //
   // This endpoint creates a Stripe payment intent for event registrations
   // In the external API implementation, you would:
   // 1. Validate the event exists and is available
@@ -96,6 +106,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   /* 
   // API INTEGRATION POINT: POST Create Cart Payment Intent
+  // External API information:
+  // - POST product: https://apis-1b88.onrender.com/api/products
+  // - GET all products: https://apis-1b88.onrender.com/api/products
+  // - POST item to cart: https://apis-1b88.onrender.com/api/cart/add
+  // - UPDATE cart item: https://apis-1b88.onrender.com/api/cart/update/{cart_item_id}
+  // - DELETE cart item: https://apis-1b88.onrender.com/api/cart/remove/{cart_item_id}
+  // - GET user cart data: https://apis-1b88.onrender.com/api/cart/{user_id}
+  //
   // This endpoint creates a Stripe payment intent for shopping cart checkout
   // In the external API implementation, you would:
   // 1. Validate the product items exist and are available
@@ -177,6 +195,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   /* 
   // API INTEGRATION POINT: POST Event RSVP
+  // External API information:
+  // - GET/POST/PUT/DELETE events: https://apis-1b88.onrender.com/api/events
+  // - GET/PUT/DELETE specific event: https://apis-1b88.onrender.com/api/events/<event_id>
+  // - GET all registrations: https://apis-1b88.onrender.com/api/registrations
+  //
   // This endpoint handles RSVPs for free events (no payment required)
   // In the external API implementation, you would:
   // 1. Validate the event exists and is available
@@ -216,6 +239,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   /* 
   // API INTEGRATION POINT: POST Newsletter Subscription
+  // External API Endpoint: https://apis-1b88.onrender.com/api/newsletter/subscribe
+  //
   // This endpoint handles newsletter subscriptions
   // In the external API implementation, you would:
   // 1. Validate the email format
