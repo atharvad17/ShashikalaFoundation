@@ -41,59 +41,39 @@ const ArtistLogin = () => {
       return;
     }
     
-    /* 
-    // API INTEGRATION POINT: POST Artist Login
-    // External API Endpoint: https://apis-1b88.onrender.com/api/auth/artist/login
-    // 
-    // This would authenticate an artist with the external API
-    // 
-    // async function loginArtist() {
-    //   try {
-    //     const response = await fetch('https://apis-1b88.onrender.com/api/auth/artist/login', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
-    //     });
-    // 
-    //     if (!response.ok) {
-    //       const errorData = await response.json();
-    //       throw new Error(errorData.message || 'Login failed');
-    //     }
-    // 
-    //     const data = await response.json();
-    //     // Store token in localStorage or secure cookie
-    //     localStorage.setItem('artistToken', data.token);
-    //     localStorage.setItem('artistId', data.artistId);
-    // 
-    //     toast({
-    //       title: "Login successful",
-    //       description: "You have been logged in.",
-    //     });
-    //
-    //     // Redirect to artist profile page
-    //     setLocation('/artist-profile');
-    //   } catch (error) {
-    //     toast({
-    //       title: "Login failed",
-    //       description: error.message || "Invalid credentials",
-    //       variant: "destructive",
-    //     });
-    //   }
-    // }
-    // 
-    // loginArtist();
-    */
+    // For demo purposes, implement a simple authentication check
+    // In a real app, this would be an API call to the backend
     
-    // This would be replaced with an actual API call
-    toast({
-      title: "Login successful",
-      description: "You have been logged in.",
-    });
-
-    // Redirect to artist profile page
-    setLocation('/artist-profile');
+    // Define hardcoded credentials for demo
+    const validCredentials = [
+      { email: 'artist@example.com', password: 'password123' },
+      { email: 'demo@artist.com', password: 'demo1234' }
+    ];
+    
+    // Check if credentials match
+    const isValid = validCredentials.some(cred => 
+      cred.email === loginEmail && cred.password === loginPassword
+    );
+    
+    if (isValid) {
+      // Store authentication info in localStorage
+      localStorage.setItem('artistLoggedIn', 'true');
+      localStorage.setItem('artistEmail', loginEmail);
+      
+      toast({
+        title: "Login successful",
+        description: "You have been logged in.",
+      });
+      
+      // Redirect to artist profile page
+      setLocation('/artist-profile');
+    } else {
+      toast({
+        title: "Login failed",
+        description: "Invalid email or password. Try artist@example.com with password123 or demo@artist.com with demo1234",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleSignup = (e: React.FormEvent) => {
@@ -173,12 +153,19 @@ const ArtistLogin = () => {
     // registerArtist();
     */
     
-    // This would be replaced with an actual API call
+    // For demo purposes, simulate a successful registration
+    // In a real app, this would send data to the backend
+    
     toast({
       title: "Signup successful",
       description: "Your account has been created.",
     });
-
+    
+    // Store authentication info in localStorage
+    localStorage.setItem('artistLoggedIn', 'true');
+    localStorage.setItem('artistEmail', email);
+    localStorage.setItem('artistName', `${firstName} ${lastName}`);
+    
     // Redirect to artist profile page
     setLocation('/artist-profile');
   };

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,7 +28,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { Pencil, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Pencil, Plus, Trash2, ChevronDown, ChevronUp, LogOut } from 'lucide-react';
 
 // Define interfaces for our data types
 interface ArtPiece {
@@ -47,6 +48,36 @@ interface Catalog {
 
 const ArtistProfile = () => {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
+  
+  // Check if the artist is logged in
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('artistLoggedIn') === 'true';
+    if (!isLoggedIn) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to access your artist profile",
+        variant: "destructive"
+      });
+      setLocation('/artist-login');
+    }
+  }, []);
+  
+  // Handle logout
+  const handleLogout = () => {
+    // Clear all artist-related data from localStorage
+    localStorage.removeItem('artistLoggedIn');
+    localStorage.removeItem('artistEmail');
+    localStorage.removeItem('artistName');
+    
+    toast({
+      title: "Logout successful",
+      description: "You have been logged out."
+    });
+    
+    // Redirect to home page
+    setLocation('/');
+  };
   /* 
   // API INTEGRATION POINT: GET Artist Profile
   // External API Endpoint: https://apis-1b88.onrender.com/api/artist/profile
