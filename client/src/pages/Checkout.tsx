@@ -48,6 +48,36 @@ export default function Checkout() {
     setIsLoading(true);
     
     try {
+      /* 
+      // API INTEGRATION POINT: POST Create Payment Intent for Cart Checkout
+      // External API Endpoint: https://apis-1b88.onrender.com/api/checkout/create-payment
+      //
+      // This would create a payment intent with Stripe using the external API
+      // Instead of using the local apiRequest function, we'd make a direct fetch to the external API:
+      //
+      // const response = await fetch('https://apis-1b88.onrender.com/api/checkout/create-payment', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ 
+      //     items: cartItems, 
+      //     amount: cartTotal,
+      //     customer: {
+      //       name,
+      //       email,
+      //       address: {
+      //         line1: address,
+      //         city,
+      //         state,
+      //         postal_code: zip,
+      //         country: 'US'
+      //       }
+      //     }
+      //   }),
+      // });
+      */
+      
       const response = await apiRequest('POST', '/api/create-cart-payment-intent', { 
         cartItems, 
         cartTotal 

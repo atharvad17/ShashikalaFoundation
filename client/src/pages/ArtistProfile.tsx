@@ -47,6 +47,67 @@ interface Catalog {
 
 const ArtistProfile = () => {
   const { toast } = useToast();
+  /* 
+  // API INTEGRATION POINT: GET Artist Profile
+  // External API Endpoint: https://apis-1b88.onrender.com/api/artist/profile
+  //
+  // This would fetch the artist's profile data from the external API
+  // 
+  // useEffect(() => {
+  //   async function fetchArtistProfile() {
+  //     try {
+  //       // Get token from localStorage
+  //       const token = localStorage.getItem('artistToken');
+  //       if (!token) {
+  //         // Redirect to login if not authenticated
+  //         setLocation('/artist-login');
+  //         return;
+  //       }
+  //       
+  //       const response = await fetch('https://apis-1b88.onrender.com/api/artist/profile', {
+  //         method: 'GET',
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //       });
+  //       
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch artist profile');
+  //       }
+  //       
+  //       const data = await response.json();
+  //       setArtist(data);
+  //       
+  //       // Fetch artist's artworks/catalogs
+  //       const artworksResponse = await fetch('https://apis-1b88.onrender.com/api/artist/artworks', {
+  //         method: 'GET',
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //           'Content-Type': 'application/json',
+  //         },
+  //       });
+  //       
+  //       if (!artworksResponse.ok) {
+  //         throw new Error('Failed to fetch artist artworks');
+  //       }
+  //       
+  //       const artworksData = await artworksResponse.json();
+  //       setCatalogs(artworksData);
+  //     } catch (error) {
+  //       console.error('Error fetching artist data:', error);
+  //       toast({
+  //         title: "Error",
+  //         description: "Failed to load your profile data. Please try again later.",
+  //         variant: "destructive",
+  //       });
+  //     }
+  //   }
+  //   
+  //   fetchArtistProfile();
+  // }, []);
+  */
+  
   const [artist, setArtist] = useState({
     name: 'John Doe',
     avatar: 'https://images.unsplash.com/photo-1508341591423-4347099e1f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80'
@@ -124,6 +185,63 @@ const ArtistProfile = () => {
       return;
     }
     
+    /* 
+    // API INTEGRATION POINT: POST Create New Catalog/Artwork Collection
+    // External API Endpoint: https://apis-1b88.onrender.com/api/artist/artworks
+    //
+    // This would create a new catalog in the external API
+    // 
+    // async function createCatalog() {
+    //   try {
+    //     // Get token from localStorage
+    //     const token = localStorage.getItem('artistToken');
+    //     if (!token) {
+    //       toast({
+    //         title: "Authentication error",
+    //         description: "Please log in again to continue.",
+    //         variant: "destructive"
+    //       });
+    //       return;
+    //     }
+    //     
+    //     const response = await fetch('https://apis-1b88.onrender.com/api/artist/artworks', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Authorization': `Bearer ${token}`,
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({
+    //         name: newCatalogName,
+    //         artPieces: []
+    //       }),
+    //     });
+    //     
+    //     if (!response.ok) {
+    //       throw new Error('Failed to create catalog');
+    //     }
+    //     
+    //     const data = await response.json();
+    //     setCatalogs([...catalogs, data]);
+    //     setNewCatalogName('');
+    //     setIsAddingCatalog(false);
+    //     
+    //     toast({
+    //       title: "Catalog created",
+    //       description: `The catalog "${newCatalogName}" was created successfully.`
+    //     });
+    //   } catch (error) {
+    //     console.error('Error creating catalog:', error);
+    //     toast({
+    //       title: "Error",
+    //       description: "Failed to create catalog. Please try again later.",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // }
+    // 
+    // createCatalog();
+    */
+    
     const newCatalog: Catalog = {
       id: Date.now().toString(),
       name: newCatalogName,
@@ -141,6 +259,57 @@ const ArtistProfile = () => {
   };
   
   const handleDeleteCatalog = (catalogId: string) => {
+    /* 
+    // API INTEGRATION POINT: DELETE Catalog/Artwork Collection
+    // External API Endpoint: https://apis-1b88.onrender.com/api/artist/artworks/<catalog_id>
+    //
+    // This would delete a catalog from the external API
+    // 
+    // async function deleteCatalog() {
+    //   try {
+    //     // Get token from localStorage
+    //     const token = localStorage.getItem('artistToken');
+    //     if (!token) {
+    //       toast({
+    //         title: "Authentication error",
+    //         description: "Please log in again to continue.",
+    //         variant: "destructive"
+    //       });
+    //       return;
+    //     }
+    //     
+    //     const response = await fetch(`https://apis-1b88.onrender.com/api/artist/artworks/${catalogId}`, {
+    //       method: 'DELETE',
+    //       headers: {
+    //         'Authorization': `Bearer ${token}`,
+    //         'Content-Type': 'application/json',
+    //       }
+    //     });
+    //     
+    //     if (!response.ok) {
+    //       throw new Error('Failed to delete catalog');
+    //     }
+    //     
+    //     // Update local state
+    //     setCatalogs(catalogs.filter(catalog => catalog.id !== catalogId));
+    //     
+    //     toast({
+    //       title: "Catalog deleted",
+    //       description: "The catalog was deleted successfully."
+    //     });
+    //   } catch (error) {
+    //     console.error('Error deleting catalog:', error);
+    //     toast({
+    //       title: "Error",
+    //       description: "Failed to delete catalog. Please try again later.",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // }
+    // 
+    // deleteCatalog();
+    */
+    
     setCatalogs(catalogs.filter(catalog => catalog.id !== catalogId));
     toast({
       title: "Catalog deleted",
@@ -158,6 +327,86 @@ const ArtistProfile = () => {
       });
       return;
     }
+    
+    /* 
+    // API INTEGRATION POINT: POST Add Art Piece to Catalog
+    // External API Endpoint: https://apis-1b88.onrender.com/api/artist/artworks/<catalog_id>/artpieces
+    //
+    // This would add a new art piece to a catalog in the external API
+    // 
+    // async function addArtPiece() {
+    //   try {
+    //     // Get token from localStorage
+    //     const token = localStorage.getItem('artistToken');
+    //     if (!token) {
+    //       toast({
+    //         title: "Authentication error",
+    //         description: "Please log in again to continue.",
+    //         variant: "destructive"
+    //       });
+    //       return;
+    //     }
+    //     
+    //     const artPieceData = {
+    //       title: newArtPiece.title,
+    //       description: newArtPiece.description,
+    //       price: parseFloat(newArtPiece.price),
+    //       artType: newArtPiece.artType,
+    //       image: newArtPiece.image || 'https://images.unsplash.com/photo-1508341591423-4347099e1f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80'
+    //     };
+    //     
+    //     const response = await fetch(`https://apis-1b88.onrender.com/api/artist/artworks/${catalogId}/artpieces`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Authorization': `Bearer ${token}`,
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(artPieceData),
+    //     });
+    //     
+    //     if (!response.ok) {
+    //       throw new Error('Failed to add art piece');
+    //     }
+    //     
+    //     const data = await response.json();
+    //     
+    //     // Update local state
+    //     setCatalogs(catalogs.map(catalog => {
+    //       if (catalog.id === catalogId) {
+    //         return {
+    //           ...catalog,
+    //           artPieces: [...catalog.artPieces, data]
+    //         };
+    //       }
+    //       return catalog;
+    //     }));
+    //     
+    //     setNewArtPiece({
+    //       title: '',
+    //       description: '',
+    //       price: '',
+    //       artType: '',
+    //       image: ''
+    //     });
+    //     
+    //     setSelectedCatalog(null);
+    //     
+    //     toast({
+    //       title: "Art piece added",
+    //       description: `"${newArtPiece.title}" was added to the catalog successfully.`
+    //     });
+    //   } catch (error) {
+    //     console.error('Error adding art piece:', error);
+    //     toast({
+    //       title: "Error",
+    //       description: "Failed to add art piece. Please try again later.",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // }
+    // 
+    // addArtPiece();
+    */
     
     const newArt: ArtPiece = {
       id: Date.now().toString(),
