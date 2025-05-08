@@ -32,7 +32,7 @@ export function PaymentLayout({
   isLoading
 }: PaymentLayoutProps) {
   return (
-    <div className="container max-w-3xl pt-24 pb-16 mx-auto">
+    <div className="container max-w-3xl pt-32 pb-16 mx-auto">
       <Card className="w-full">
         <CardHeader className="space-y-1 text-center">
           <CardTitle className="text-2xl">{title}</CardTitle>
