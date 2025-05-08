@@ -3,6 +3,13 @@ import { Product } from '@/lib/data';
 
 export interface CartItem extends Product {
   quantity: number;
+  // Make sure we explicitly include these from Product for clarity
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  artist: string;
+  image: string;
 }
 
 interface CartContextType {

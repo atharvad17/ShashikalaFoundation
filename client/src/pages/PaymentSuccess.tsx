@@ -123,26 +123,60 @@ export default function PaymentSuccess() {
         
         {purchasedItems.length > 0 ? (
           <div className="space-y-4">
+            {/* Enhanced Item Display with Larger Images */}
             {purchasedItems.map((item) => (
-              <div key={item.id} className="flex items-start space-x-4 border-b pb-4">
-                <div className="rounded-md overflow-hidden w-16 h-16 flex-shrink-0">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+              <div key={item.id} className="flex flex-col border rounded-md overflow-hidden mb-4">
+                {/* Item Image - Much Larger */}
+                <div className="w-full h-48 overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover" 
+                  />
                 </div>
-                <div className="flex-1">
-                  <div className="font-medium">{item.title}</div>
-                  <div className="text-sm text-gray-500">Artist: {item.artist}</div>
-                  <div className="flex justify-between mt-1">
-                    <div className="text-sm">${item.price} × {item.quantity}</div>
-                    <div className="font-medium">${item.price * item.quantity}</div>
+                
+                {/* Item Details */}
+                <div className="p-4 bg-white">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-semibold text-lg">{item.title}</h4>
+                      <p className="text-sm text-gray-600">Artist: {item.artist}</p>
+                      {item.description && (
+                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">{item.description}</p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium">${item.price.toFixed(2)}</div>
+                      <div className="text-sm text-gray-500">Quantity: {item.quantity}</div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-2 pt-2 border-t flex justify-between">
+                    <span className="font-medium">Item Total:</span>
+                    <span className="font-semibold">${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
             ))}
             
-            <div className="border-t pt-4">
-              <div className="flex justify-between text-lg font-medium">
-                <span>Total</span>
-                <span>${paymentAmount}</span>
+            {/* Order Summary */}
+            <div className="border rounded-md p-4 bg-white">
+              <h4 className="font-semibold mb-3">Order Summary</h4>
+              
+              <div className="space-y-2 mb-3">
+                {purchasedItems.map(item => (
+                  <div key={`summary-${item.id}`} className="flex justify-between text-sm">
+                    <span>{item.quantity} × {item.title}</span>
+                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="border-t pt-3 mt-3">
+                <div className="flex justify-between text-lg font-medium">
+                  <span>Total</span>
+                  <span>${paymentAmount}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -153,12 +187,40 @@ export default function PaymentSuccess() {
         )}
       </div>
       
-      <div>
+      {/* Shipping Information */}
+      <div className="bg-white border rounded-md p-4 mb-4">
+        <h3 className="font-medium mb-2">Shipping Information</h3>
+        {localStorage.getItem('customerName') && (
+          <p className="text-gray-700">{localStorage.getItem('customerName')}</p>
+        )}
+        {localStorage.getItem('customerEmail') && (
+          <p className="text-gray-700">{localStorage.getItem('customerEmail')}</p>
+        )}
+        
+        {localStorage.getItem('shippingAddress') && (
+          (() => {
+            try {
+              const address = JSON.parse(localStorage.getItem('shippingAddress') || '{}');
+              return (
+                <div className="text-gray-700">
+                  <p>{address.address}</p>
+                  <p>{address.city}, {address.state} {address.zip}</p>
+                </div>
+              );
+            } catch (e) {
+              return null;
+            }
+          })()
+        )}
+      </div>
+      
+      {/* Order Details */}
+      <div className="bg-white border rounded-md p-4">
         <h3 className="font-medium mb-2">Order Details</h3>
         <div className="text-sm text-gray-700 space-y-1">
           <div className="flex justify-between">
             <span>Order Number:</span>
-            <span>{localStorage.getItem('paymentId')?.substring(0, 8) || 'ORD-' + Math.floor(Math.random() * 10000)}</span>
+            <span className="font-mono">{localStorage.getItem('paymentId')?.substring(0, 8) || 'ORD-' + Math.floor(Math.random() * 10000)}</span>
           </div>
           <div className="flex justify-between">
             <span>Order Date:</span>
