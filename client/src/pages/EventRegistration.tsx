@@ -118,6 +118,52 @@ export default function EventRegistration() {
           throw new Error('Failed to submit RSVP');
         }
       } else {
+        /* 
+        // API INTEGRATION POINT: POST Create Event Registration Payment Intent
+        // External API Endpoint: https://apis-1b88.onrender.com/api/event/register
+        //
+        // This would create an event registration payment intent with Stripe using the external API
+        // Instead of mocking client secrets, we'd make a direct fetch to the external API:
+        //
+        // const response = await fetch('https://apis-1b88.onrender.com/api/event/register', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({ 
+        //     eventId: event.id,
+        //     attendees,
+        //     amount: totalAmount,
+        //     customer: {
+        //       name,
+        //       email
+        //     }
+        //   }),
+        // });
+        //
+        // const data = await response.json();
+        //
+        // if (data.clientSecret) {
+        //   setClientSecret(data.clientSecret);
+        //   setShowPaymentForm(true);
+        //   
+        //   // Store the registration data for the checkout process
+        //   const registrationData = {
+        //     eventId: event.id,
+        //     firstName: name.split(' ')[0],
+        //     lastName: name.split(' ').slice(1).join(' '),
+        //     email,
+        //     attendees,
+        //     totalAmount
+        //   };
+        //   
+        //   localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
+        //   window.scrollTo(0, 0);
+        // } else {
+        //   throw new Error('Failed to initialize event registration payment');
+        // }
+        */
+        
         // For paid events, let's try to work around the API issues by mocking the client secret
         // In a real app, you'd get this from your backend
         console.log("Attempting to process payment for event:", event.id);

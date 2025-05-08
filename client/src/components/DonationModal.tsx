@@ -68,6 +68,35 @@ const DonationModal = ({
     try {
       setIsSubmitting(true);
       
+      /* 
+      // API INTEGRATION POINT: POST Create Donation Payment Intent
+      // External API Endpoint: https://apis-1b88.onrender.com/api/donate
+      //
+      // This would create a donation payment intent with Stripe using the external API
+      // Instead of using the local apiRequest function, we'd make a direct fetch to the external API:
+      //
+      // const response = await fetch('https://apis-1b88.onrender.com/api/donate', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ 
+      //     name,
+      //     email,
+      //     amount
+      //   }),
+      // });
+      //
+      // const data = await response.json();
+      //
+      // if (data.clientSecret) {
+      //   // Redirect to the donation payment page with the client secret
+      //   window.location.href = `/donate/payment?clientSecret=${data.clientSecret}&amount=${amount}`;
+      // } else {
+      //   throw new Error('Failed to initialize donation payment');
+      // }
+      */
+      
       // In a real application, we would process payment here
       await apiRequest('POST', '/api/donate', { name, email, amount });
       
