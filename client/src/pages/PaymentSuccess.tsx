@@ -177,75 +177,121 @@ export default function PaymentSuccess() {
     </>
   );
   
-  const renderEventRegistrationConfirmation = () => (
-    event && registrationData ? (
-      <>
-        <div className="bg-gray-50 p-4 rounded-md">
-          <h3 className="text-xl font-semibold mb-4">{event.title}</h3>
-          
-          <div className="flex items-center mb-2">
-            <Calendar className="h-4 w-4 mr-2 text-[#9DD3DD]" />
-            <span className="text-gray-700">
-              {event.date.month} {event.date.day}, 2024 | {event.time}
-            </span>
-          </div>
-          
-          <div className="flex items-center mb-2">
-            <MapPin className="h-4 w-4 mr-2 text-[#9DD3DD]" />
-            <span className="text-gray-700">{event.location}</span>
-          </div>
-          
-          <div className="flex items-center mb-2">
-            <Users className="h-4 w-4 mr-2 text-[#9DD3DD]" />
-            <span className="text-gray-700">{registrationData.attendees} {registrationData.attendees === 1 ? 'Attendee' : 'Attendees'}</span>
-          </div>
-        </div>
-        
-        <div>
-          <h3 className="font-medium mb-2">Registration Details</h3>
-          <p className="text-gray-700">
-            {registrationData.firstName} {registrationData.middleName ? registrationData.middleName + ' ' : ''}{registrationData.lastName}
-          </p>
-          <p className="text-gray-700">{registrationData.email}</p>
-          <p className="text-gray-700">{registrationData.contact}</p>
-          <p className="text-gray-700">{registrationData.address}</p>
-          {registrationData.addressLine2 && (
-            <p className="text-gray-700">{registrationData.addressLine2}</p>
-          )}
-          <p className="text-gray-700">
-            {registrationData.city}, {registrationData.state} {registrationData.zipcode}
-          </p>
-        </div>
-        
-        <Separator />
-        
-        <div>
-          <div className="flex justify-between text-sm mb-1">
-            <span>Price per attendee:</span>
-            <span>${event.price}.00</span>
-          </div>
-          <div className="flex justify-between text-sm mb-1">
-            <span>Number of attendees:</span>
-            <span>{registrationData.attendees}</span>
-          </div>
-          <div className="border-t border-gray-200 pt-2 mt-2">
-            <div className="flex justify-between font-medium">
-              <span>Total:</span>
-              <span>${registrationData.totalAmount}.00</span>
+  const renderEventRegistrationConfirmation = () => {
+    // Handle case where we have the full registration data and event
+    if (event && registrationData) {
+      return (
+        <>
+          <div className="bg-gray-50 p-4 rounded-md">
+            <h3 className="text-xl font-semibold mb-4">{event.title}</h3>
+            
+            <div className="flex items-center mb-2">
+              <Calendar className="h-4 w-4 mr-2 text-[#9DD3DD]" />
+              <span className="text-gray-700">
+                {event.date.month} {event.date.day}, 2024 | {event.time}
+              </span>
+            </div>
+            
+            <div className="flex items-center mb-2">
+              <MapPin className="h-4 w-4 mr-2 text-[#9DD3DD]" />
+              <span className="text-gray-700">{event.location}</span>
+            </div>
+            
+            <div className="flex items-center mb-2">
+              <Users className="h-4 w-4 mr-2 text-[#9DD3DD]" />
+              <span className="text-gray-700">{registrationData.attendees} {registrationData.attendees === 1 ? 'Attendee' : 'Attendees'}</span>
             </div>
           </div>
+          
+          <div>
+            <h3 className="font-medium mb-2">Registration Details</h3>
+            <p className="text-gray-700">
+              {registrationData.firstName} {registrationData.middleName ? registrationData.middleName + ' ' : ''}{registrationData.lastName}
+            </p>
+            <p className="text-gray-700">{registrationData.email}</p>
+            <p className="text-gray-700">{registrationData.contact}</p>
+            <p className="text-gray-700">{registrationData.address}</p>
+            {registrationData.addressLine2 && (
+              <p className="text-gray-700">{registrationData.addressLine2}</p>
+            )}
+            <p className="text-gray-700">
+              {registrationData.city}, {registrationData.state} {registrationData.zipcode}
+            </p>
+          </div>
+          
+          <Separator />
+          
+          <div>
+            <div className="flex justify-between text-sm mb-1">
+              <span>Price per attendee:</span>
+              <span>${event.price}.00</span>
+            </div>
+            <div className="flex justify-between text-sm mb-1">
+              <span>Number of attendees:</span>
+              <span>{registrationData.attendees}</span>
+            </div>
+            <div className="border-t border-gray-200 pt-2 mt-2">
+              <div className="flex justify-between font-medium">
+                <span>Total:</span>
+                <span>${registrationData.totalAmount}.00</span>
+              </div>
+            </div>
+          </div>
+          
+          <p className="text-center text-gray-600 mt-4">
+            A confirmation email has been sent to your email address with your ticket details.
+          </p>
+        </>
+      );
+    }
+    
+    // Handle case where we have an event title but not full data
+    const eventTitle = localStorage.getItem('eventTitle');
+    
+    if (eventTitle) {
+      return (
+        <>
+          <div className="bg-gray-50 p-6 rounded-md text-center">
+            <Calendar className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Registration Confirmed</h3>
+            <p className="text-gray-700 mb-4">
+              Your registration for "{eventTitle}" has been confirmed.
+            </p>
+            {paymentAmount && (
+              <div className="mt-4 mb-2">
+                <div className="text-3xl font-bold text-gray-800">${paymentAmount}</div>
+                <div className="text-sm text-gray-500">Registration Fee</div>
+              </div>
+            )}
+          </div>
+          
+          <p className="text-center text-gray-600 mt-4">
+            A confirmation email has been sent to your email address with all event details and your ticket.
+          </p>
+        </>
+      );
+    }
+    
+    // Fallback generic confirmation when we don't have specific event details
+    return (
+      <>
+        <div className="bg-gray-50 p-6 rounded-md text-center">
+          <Calendar className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold mb-2">Registration Confirmed</h3>
+          {paymentAmount && (
+            <div className="mt-4 mb-2">
+              <div className="text-3xl font-bold text-gray-800">${paymentAmount}</div>
+              <div className="text-sm text-gray-500">Registration Fee</div>
+            </div>
+          )}
         </div>
         
         <p className="text-center text-gray-600 mt-4">
-          A confirmation email has been sent to your email address with your ticket details.
+          Thank you for registering for our event. A confirmation email has been sent with your ticket details.
         </p>
       </>
-    ) : (
-      <p className="text-center text-gray-600">
-        Thank you for registering for our event. A confirmation email has been sent with your ticket details.
-      </p>
-    )
-  );
+    );
+  };
   
   const renderGenericConfirmation = () => (
     <>

@@ -259,11 +259,19 @@ export default function EventRegistration() {
   const handleSuccess = () => {
     if (!event) return;
     
+    // Display a success toast
     toast({
       title: "Registration Complete",
       description: `You've successfully registered for ${event.title}.`,
     });
-    navigate('/events');
+    
+    // Store event title in localStorage for the confirmation page
+    if (event.title) {
+      localStorage.setItem('eventTitle', event.title);
+    }
+    
+    // Navigate to the payment success page to show the confirmation
+    navigate('/payment-success');
   };
 
   if (!event) return null;

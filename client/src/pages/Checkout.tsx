@@ -122,10 +122,18 @@ export default function Checkout() {
     // Clear shopping cart
     clearCart();
     
+    // Display a success toast
     toast({
       title: "Order Complete!",
       description: "Your order has been successfully processed.",
     });
+    
+    // Save some additional info for the success page if needed
+    if (name) {
+      localStorage.setItem('customerName', name);
+    }
+    
+    // Navigate to the payment success page
     navigate('/payment-success');
   };
 
