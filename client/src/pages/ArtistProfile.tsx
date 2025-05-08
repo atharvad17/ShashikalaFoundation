@@ -139,8 +139,9 @@ const ArtistProfile = () => {
   // }, []);
   */
   
+  // Get artist name from localStorage if available
   const [artist, setArtist] = useState({
-    name: 'John Doe',
+    name: localStorage.getItem('artistName') || 'Artist Name',
     avatar: 'https://images.unsplash.com/photo-1508341591423-4347099e1f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80'
   });
   
@@ -561,6 +562,18 @@ const ArtistProfile = () => {
             ))}
           </ul>
         </nav>
+        
+        {/* Logout Button */}
+        <div className="mt-8 px-4">
+          <Button 
+            variant="destructive" 
+            className="w-full flex items-center justify-center gap-2"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
+        </div>
         
         {/* Social Icons */}
         <div className="flex justify-center space-x-4 mt-6">

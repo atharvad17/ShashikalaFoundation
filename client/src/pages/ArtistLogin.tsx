@@ -46,19 +46,20 @@ const ArtistLogin = () => {
     
     // Define hardcoded credentials for demo
     const validCredentials = [
-      { email: 'artist@example.com', password: 'password123' },
-      { email: 'demo@artist.com', password: 'demo1234' }
+      { email: 'artist@example.com', password: 'password123', name: 'John Artist' },
+      { email: 'demo@artist.com', password: 'demo1234', name: 'Demo User' }
     ];
     
     // Check if credentials match
-    const isValid = validCredentials.some(cred => 
+    const matchedCredential = validCredentials.find(cred => 
       cred.email === loginEmail && cred.password === loginPassword
     );
     
-    if (isValid) {
+    if (matchedCredential) {
       // Store authentication info in localStorage
       localStorage.setItem('artistLoggedIn', 'true');
       localStorage.setItem('artistEmail', loginEmail);
+      localStorage.setItem('artistName', matchedCredential.name);
       
       toast({
         title: "Login successful",
