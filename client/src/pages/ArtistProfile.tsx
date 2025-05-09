@@ -526,6 +526,7 @@ const ArtistProfile = () => {
     { id: 'manage-account', label: 'Manage Account' },
     { id: 'analytics', label: 'Analytics' },
     { id: 'profile-management', label: 'Profile Management' },
+    { id: 'api-testing', label: 'API Testing' },
   ];
   
   return (
@@ -1251,6 +1252,378 @@ const ArtistProfile = () => {
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+        
+        {/* API Testing Tab */}
+        {activeTab === 'api-testing' && (
+          <div>
+            <h1 className="text-2xl font-bold text-center text-[#4A90E2] mb-8">API Testing</h1>
+            
+            <div className="bg-white rounded-lg shadow-sm p-6 space-y-8">
+              {/* Profile Management API */}
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold border-b pb-2">Profile Management API</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="font-medium mb-2">GET - /api/artist/profile</h3>
+                    <Button 
+                      onClick={() => {
+                        // Make a GET request to /api/artist/profile
+                        toast({
+                          title: "API Request",
+                          description: "Making GET request to /api/artist/profile",
+                        });
+                        fetch('https://apis-1b88.onrender.com/api/artist/profile')
+                          .then(response => response.json())
+                          .then(data => {
+                            console.log('Profile data:', data);
+                            toast({
+                              title: "API Response",
+                              description: "Check console for profile data",
+                            });
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                            toast({
+                              title: "API Error",
+                              description: error.message,
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                      className="bg-blue-500 hover:bg-blue-600 text-white"
+                    >
+                      Test GET Profile
+                    </Button>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-medium mb-2">PUT - /api/artist/profile</h3>
+                    <Button 
+                      onClick={() => {
+                        // Make a PUT request to /api/artist/profile
+                        toast({
+                          title: "API Request",
+                          description: "Making PUT request to /api/artist/profile",
+                        });
+                        fetch('https://apis-1b88.onrender.com/api/artist/profile', {
+                          method: 'PUT',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            name: 'Updated Artist Name',
+                            bio: 'This is an updated artist bio',
+                            location: 'New York, NY'
+                          }),
+                        })
+                          .then(response => response.json())
+                          .then(data => {
+                            console.log('Updated profile:', data);
+                            toast({
+                              title: "API Response",
+                              description: "Profile updated successfully",
+                            });
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                            toast({
+                              title: "API Error",
+                              description: error.message,
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                      className="bg-amber-500 hover:bg-amber-600 text-white"
+                    >
+                      Test Update Profile
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Content Management API */}
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold border-b pb-2">Content Management API</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="font-medium mb-2">GET - /api/artist/artworks</h3>
+                    <Button 
+                      onClick={() => {
+                        // Make a GET request to /api/artist/artworks
+                        toast({
+                          title: "API Request",
+                          description: "Making GET request to /api/artist/artworks",
+                        });
+                        fetch('https://apis-1b88.onrender.com/api/artist/artworks')
+                          .then(response => response.json())
+                          .then(data => {
+                            console.log('Artworks data:', data);
+                            toast({
+                              title: "API Response",
+                              description: "Check console for artworks data",
+                            });
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                            toast({
+                              title: "API Error",
+                              description: error.message,
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                      className="bg-blue-500 hover:bg-blue-600 text-white"
+                    >
+                      Test GET Artworks
+                    </Button>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-medium mb-2">POST - /api/artist/artworks</h3>
+                    <Button 
+                      onClick={() => {
+                        // Make a POST request to /api/artist/artworks
+                        toast({
+                          title: "API Request",
+                          description: "Making POST request to /api/artist/artworks",
+                        });
+                        fetch('https://apis-1b88.onrender.com/api/artist/artworks', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            title: 'New Artwork',
+                            description: 'This is a new artwork',
+                            price: 199.99,
+                            medium: 'Oil on canvas',
+                            imageUrl: 'https://example.com/image.jpg'
+                          }),
+                        })
+                          .then(response => response.json())
+                          .then(data => {
+                            console.log('Created artwork:', data);
+                            toast({
+                              title: "API Response",
+                              description: "Artwork created successfully",
+                            });
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                            toast({
+                              title: "API Error",
+                              description: error.message,
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                      className="bg-green-500 hover:bg-green-600 text-white"
+                    >
+                      Test Create Artwork
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Event Management API */}
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold border-b pb-2">Event Management API</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="font-medium mb-2">GET - /api/events</h3>
+                    <Button 
+                      onClick={() => {
+                        // Make a GET request to /api/events
+                        toast({
+                          title: "API Request",
+                          description: "Making GET request to /api/events",
+                        });
+                        fetch('https://apis-1b88.onrender.com/api/events')
+                          .then(response => response.json())
+                          .then(data => {
+                            console.log('Events data:', data);
+                            toast({
+                              title: "API Response",
+                              description: "Check console for events data",
+                            });
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                            toast({
+                              title: "API Error",
+                              description: error.message,
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                      className="bg-blue-500 hover:bg-blue-600 text-white"
+                    >
+                      Test GET Events
+                    </Button>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-medium mb-2">POST - /api/events</h3>
+                    <Button 
+                      onClick={() => {
+                        // Make a POST request to /api/events
+                        toast({
+                          title: "API Request",
+                          description: "Making POST request to /api/events",
+                        });
+                        fetch('https://apis-1b88.onrender.com/api/events', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            title: 'New Exhibition',
+                            description: 'This is a new art exhibition',
+                            date: '2025-05-15',
+                            time: '18:00',
+                            location: 'Art Gallery',
+                            price: 10
+                          }),
+                        })
+                          .then(response => response.json())
+                          .then(data => {
+                            console.log('Created event:', data);
+                            toast({
+                              title: "API Response",
+                              description: "Event created successfully",
+                            });
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                            toast({
+                              title: "API Error",
+                              description: error.message,
+                              variant: "destructive"
+                            });
+                          });
+                      }}
+                      className="bg-green-500 hover:bg-green-600 text-white"
+                    >
+                      Test Create Event
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <h3 className="font-medium mb-2">PUT - /api/events/:id</h3>
+                    <div className="flex space-x-2">
+                      <Input placeholder="Enter event ID" className="w-32" id="update-event-id" />
+                      <Button 
+                        onClick={() => {
+                          const eventId = (document.getElementById('update-event-id') as HTMLInputElement).value;
+                          if (!eventId) {
+                            toast({
+                              title: "Missing ID",
+                              description: "Please enter an event ID",
+                              variant: "destructive"
+                            });
+                            return;
+                          }
+                          
+                          // Make a PUT request to /api/events/:id
+                          toast({
+                            title: "API Request",
+                            description: `Making PUT request to /api/events/${eventId}`,
+                          });
+                          fetch(`https://apis-1b88.onrender.com/api/events/${eventId}`, {
+                            method: 'PUT',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              title: 'Updated Exhibition',
+                              description: 'This is an updated art exhibition',
+                              date: '2025-05-20',
+                              time: '19:00',
+                              location: 'Art Gallery - Main Hall',
+                              price: 15
+                            }),
+                          })
+                            .then(response => response.json())
+                            .then(data => {
+                              console.log('Updated event:', data);
+                              toast({
+                                title: "API Response",
+                                description: "Event updated successfully",
+                              });
+                            })
+                            .catch(error => {
+                              console.error('Error:', error);
+                              toast({
+                                title: "API Error",
+                                description: error.message,
+                                variant: "destructive"
+                              });
+                            });
+                        }}
+                        className="bg-amber-500 hover:bg-amber-600 text-white"
+                      >
+                        Update Event
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-medium mb-2">DELETE - /api/events/:id</h3>
+                    <div className="flex space-x-2">
+                      <Input placeholder="Enter event ID" className="w-32" id="delete-event-id" />
+                      <Button 
+                        onClick={() => {
+                          const eventId = (document.getElementById('delete-event-id') as HTMLInputElement).value;
+                          if (!eventId) {
+                            toast({
+                              title: "Missing ID",
+                              description: "Please enter an event ID",
+                              variant: "destructive"
+                            });
+                            return;
+                          }
+                          
+                          // Make a DELETE request to /api/events/:id
+                          toast({
+                            title: "API Request",
+                            description: `Making DELETE request to /api/events/${eventId}`,
+                          });
+                          fetch(`https://apis-1b88.onrender.com/api/events/${eventId}`, {
+                            method: 'DELETE',
+                          })
+                            .then(response => {
+                              if (response.ok) {
+                                console.log('Event deleted successfully');
+                                toast({
+                                  title: "API Response",
+                                  description: "Event deleted successfully",
+                                });
+                              } else {
+                                throw new Error('Failed to delete event');
+                              }
+                            })
+                            .catch(error => {
+                              console.error('Error:', error);
+                              toast({
+                                title: "API Error",
+                                description: error.message,
+                                variant: "destructive"
+                              });
+                            });
+                        }}
+                        className="bg-red-500 hover:bg-red-600 text-white"
+                      >
+                        Delete Event
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}

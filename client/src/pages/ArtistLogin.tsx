@@ -32,67 +32,37 @@ const ArtistLogin = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!loginEmail || !loginPassword) {
+    if (!loginEmail) {
       toast({
-        title: "Missing fields",
-        description: "Please fill in all fields.",
+        title: "Missing email",
+        description: "Please provide an email address for testing.",
         variant: "destructive",
       });
       return;
     }
     
-    // For demo purposes, implement a simple authentication check
-    // In a real app, this would be an API call to the backend
+    // Allow any credentials for API testing
+    // Store authentication info in localStorage
+    localStorage.setItem('artistLoggedIn', 'true');
+    localStorage.setItem('artistEmail', loginEmail);
+    localStorage.setItem('artistName', 'Test Artist');
     
-    // Define hardcoded credentials for demo
-    const validCredentials = [
-      { email: 'artist@example.com', password: 'password123', name: 'John Artist' },
-      { email: 'demo@artist.com', password: 'demo1234', name: 'Demo User' }
-    ];
+    toast({
+      title: "API Test Mode",
+      description: "You're now logged in with test credentials. You can now test the API endpoints.",
+    });
     
-    // Check if credentials match
-    const matchedCredential = validCredentials.find(cred => 
-      cred.email === loginEmail && cred.password === loginPassword
-    );
-    
-    if (matchedCredential) {
-      // Store authentication info in localStorage
-      localStorage.setItem('artistLoggedIn', 'true');
-      localStorage.setItem('artistEmail', loginEmail);
-      localStorage.setItem('artistName', matchedCredential.name);
-      
-      toast({
-        title: "Login successful",
-        description: "You have been logged in.",
-      });
-      
-      // Redirect to artist profile page
-      setLocation('/artist-profile');
-    } else {
-      toast({
-        title: "Login failed",
-        description: "Invalid email or password. Try artist@example.com with password123 or demo@artist.com with demo1234",
-        variant: "destructive",
-      });
-    }
+    // Redirect to artist profile page
+    setLocation('/artist-profile');
   };
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!firstName || !lastName || !email || !phoneNumber || !city || !state || !country || !password || !confirmPassword) {
+    if (!email) {
       toast({
-        title: "Missing fields",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    if (password !== confirmPassword) {
-      toast({
-        title: "Passwords don't match",
-        description: "Please make sure your passwords match.",
+        title: "Missing email",
+        description: "Please provide an email address for testing.",
         variant: "destructive",
       });
       return;
