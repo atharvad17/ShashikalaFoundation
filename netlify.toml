@@ -1,0 +1,25 @@
+[build]
+  command = "node netlify-build.js"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Redirect API calls to external API
+[[redirects]]
+  from = "/api/artist/*"
+  to = "https://apis-1b88.onrender.com/api/artist/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/events/*"
+  to = "https://apis-1b88.onrender.com/api/events/:splat"
+  status = 200
+  force = true
+
+# Handle SPA routing - redirect all remaining paths to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
